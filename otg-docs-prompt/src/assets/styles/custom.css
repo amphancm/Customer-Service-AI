@@ -1,0 +1,30 @@
+/* custom.css */
+.bg-midnight {
+    background-color: #161A30;
+}
+  
+
+/* ในไฟล์ style.css หรือ style block */
+.bg-gradient {
+  /* ไล่สีแดงสด (#E43A32) ไปสีเทาอ่อน (#F7F7F7) ตามที่ต้องการ */
+  background: linear-gradient(180deg, rgba(228, 58, 50, 1) 0%, rgba(247, 247, 247, 1) 100%);
+  min-height: 100vh; /* ให้เต็มความสูงหน้าจอ */
+}
+
+/* ให้ html, body เต็มความสูง */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* class สำหรับไล่สีพื้นหลัง */
+.bg-gradient {
+  background: linear-gradient(180deg, rgba(228, 58, 50, 1) 0%, rgba(247, 247, 247, 1) 100%);
+  min-height: 100vh; /* เต็ม viewport height */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

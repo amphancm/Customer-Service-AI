@@ -1,0 +1,1264 @@
+﻿2025-06-23 11:27:44.198 | [2025-06-23 04:27:44 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:27:44.199 | [2025-06-23 04:27:44 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:27:44.199 | [2025-06-23 04:27:44 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:27:44.205 | [2025-06-23 04:27:44 +0000] [6] [INFO] Booting worker with pid: 6
+2025-06-23 11:27:44.650 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:27:44.650 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:27:47.372 | [2025-06-23 04:27:47 +0000] [6] [ERROR] Exception in worker process
+2025-06-23 11:27:47.372 | Traceback (most recent call last):
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:27:47.372 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:27:47.372 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:27:47.372 |     return json.loads(text)
+2025-06-23 11:27:47.372 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:27:47.372 |     return _default_decoder.decode(s)
+2025-06-23 11:27:47.372 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:27:47.372 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:27:47.372 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:27:47.372 | 
+2025-06-23 11:27:47.372 | During handling of the above exception, another exception occurred:
+2025-06-23 11:27:47.372 | 
+2025-06-23 11:27:47.372 | Traceback (most recent call last):
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:27:47.372 |     worker.init_process()
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:27:47.372 |     self.load_wsgi()
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:27:47.372 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:27:47.372 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:27:47.372 |     self.callable = self.load()
+2025-06-23 11:27:47.372 |                     ^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:27:47.372 |     return self.load_wsgiapp()
+2025-06-23 11:27:47.372 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:27:47.372 |     return util.import_app(self.app_uri)
+2025-06-23 11:27:47.372 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:27:47.372 |     mod = importlib.import_module(module)
+2025-06-23 11:27:47.372 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:27:47.372 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:27:47.372 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:27:47.372 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:27:47.372 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:27:47.372 |     from routes import register_routes
+2025-06-23 11:27:47.372 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:27:47.372 |     from .chat_routes import chat_bp
+2025-06-23 11:27:47.372 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:27:47.372 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:27:47.372 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:27:47.372 |     from processing import compute_model
+2025-06-23 11:27:47.372 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:27:47.372 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:27:47.372 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:27:47.372 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:27:47.372 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:27:47.372 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:47.372 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:27:47.372 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:47.372 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:47.372 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:27:47.372 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:27:47.372 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:27:47.372 | [2025-06-23 04:27:47 +0000] [6] [INFO] Worker exiting (pid: 6)
+2025-06-23 11:27:48.038 | [2025-06-23 04:27:48 +0000] [1] [ERROR] Worker (pid:6) exited with code 3
+2025-06-23 11:27:48.038 | [2025-06-23 04:27:48 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:27:48.038 | [2025-06-23 04:27:48 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:27:48.374 | [2025-06-23 04:27:48 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:27:48.374 | [2025-06-23 04:27:48 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:27:48.374 | [2025-06-23 04:27:48 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:27:48.375 | [2025-06-23 04:27:48 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:27:48.508 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:27:48.508 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:27:50.333 | [2025-06-23 04:27:50 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:27:50.333 | Traceback (most recent call last):
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:27:50.333 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:27:50.333 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:27:50.333 |     return json.loads(text)
+2025-06-23 11:27:50.333 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:27:50.333 |     return _default_decoder.decode(s)
+2025-06-23 11:27:50.333 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:27:50.333 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:27:50.333 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:27:50.333 | 
+2025-06-23 11:27:50.333 | During handling of the above exception, another exception occurred:
+2025-06-23 11:27:50.333 | 
+2025-06-23 11:27:50.333 | Traceback (most recent call last):
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:27:50.333 |     worker.init_process()
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:27:50.333 |     self.load_wsgi()
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:27:50.333 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:27:50.333 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:27:50.333 |     self.callable = self.load()
+2025-06-23 11:27:50.333 |                     ^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:27:50.333 |     return self.load_wsgiapp()
+2025-06-23 11:27:50.333 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:27:50.333 |     return util.import_app(self.app_uri)
+2025-06-23 11:27:50.333 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:27:50.333 |     mod = importlib.import_module(module)
+2025-06-23 11:27:50.333 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:27:50.333 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:27:50.333 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:27:50.333 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:27:50.333 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:27:50.333 |     from routes import register_routes
+2025-06-23 11:27:50.333 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:27:50.333 |     from .chat_routes import chat_bp
+2025-06-23 11:27:50.333 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:27:50.333 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:27:50.333 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:27:50.333 |     from processing import compute_model
+2025-06-23 11:27:50.333 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:27:50.333 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:27:50.333 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:27:50.333 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:27:50.333 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:27:50.333 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:50.333 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:27:50.333 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:50.333 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:50.333 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:27:50.333 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:27:50.333 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:27:50.333 | [2025-06-23 04:27:50 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:27:50.870 | [2025-06-23 04:27:50 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:27:50.870 | [2025-06-23 04:27:50 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:27:50.870 | [2025-06-23 04:27:50 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:27:51.194 | [2025-06-23 04:27:51 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:27:51.194 | [2025-06-23 04:27:51 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:27:51.194 | [2025-06-23 04:27:51 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:27:51.195 | [2025-06-23 04:27:51 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:27:51.307 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:27:51.307 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:27:53.545 | [2025-06-23 04:27:53 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:27:53.545 | Traceback (most recent call last):
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:27:53.545 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:27:53.545 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:27:53.545 |     return json.loads(text)
+2025-06-23 11:27:53.545 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:27:53.545 |     return _default_decoder.decode(s)
+2025-06-23 11:27:53.545 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:27:53.545 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:27:53.545 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:27:53.545 | 
+2025-06-23 11:27:53.545 | During handling of the above exception, another exception occurred:
+2025-06-23 11:27:53.545 | 
+2025-06-23 11:27:53.545 | Traceback (most recent call last):
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:27:53.545 |     worker.init_process()
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:27:53.545 |     self.load_wsgi()
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:27:53.545 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:27:53.545 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:27:53.545 |     self.callable = self.load()
+2025-06-23 11:27:53.545 |                     ^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:27:53.545 |     return self.load_wsgiapp()
+2025-06-23 11:27:53.545 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:27:53.545 |     return util.import_app(self.app_uri)
+2025-06-23 11:27:53.545 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:27:53.545 |     mod = importlib.import_module(module)
+2025-06-23 11:27:53.545 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:27:53.545 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:27:53.545 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:27:53.545 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:27:53.545 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:27:53.545 |     from routes import register_routes
+2025-06-23 11:27:53.545 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:27:53.545 |     from .chat_routes import chat_bp
+2025-06-23 11:27:53.545 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:27:53.545 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:27:53.545 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:27:53.545 |     from processing import compute_model
+2025-06-23 11:27:53.545 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:27:53.545 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:27:53.545 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:27:53.545 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:27:53.545 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:27:53.545 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:53.545 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:27:53.545 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:53.545 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:53.545 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:27:53.545 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:27:53.545 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:27:53.545 | [2025-06-23 04:27:53 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:27:54.105 | [2025-06-23 04:27:54 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:27:54.105 | [2025-06-23 04:27:54 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:27:54.105 | [2025-06-23 04:27:54 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:27:54.647 | [2025-06-23 04:27:54 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:27:54.647 | [2025-06-23 04:27:54 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:27:54.647 | [2025-06-23 04:27:54 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:27:54.649 | [2025-06-23 04:27:54 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:27:54.757 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:27:54.757 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:27:56.465 | [2025-06-23 04:27:56 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:27:56.465 | Traceback (most recent call last):
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:27:56.465 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:27:56.465 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:27:56.465 |     return json.loads(text)
+2025-06-23 11:27:56.465 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:27:56.465 |     return _default_decoder.decode(s)
+2025-06-23 11:27:56.465 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:27:56.465 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:27:56.465 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:27:56.465 | 
+2025-06-23 11:27:56.465 | During handling of the above exception, another exception occurred:
+2025-06-23 11:27:56.465 | 
+2025-06-23 11:27:56.465 | Traceback (most recent call last):
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:27:56.465 |     worker.init_process()
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:27:56.465 |     self.load_wsgi()
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:27:56.465 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:27:56.465 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:27:56.465 |     self.callable = self.load()
+2025-06-23 11:27:56.465 |                     ^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:27:56.465 |     return self.load_wsgiapp()
+2025-06-23 11:27:56.465 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:27:56.465 |     return util.import_app(self.app_uri)
+2025-06-23 11:27:56.465 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:27:56.465 |     mod = importlib.import_module(module)
+2025-06-23 11:27:56.465 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:27:56.465 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:27:56.465 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:27:56.465 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:27:56.465 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:27:56.465 |     from routes import register_routes
+2025-06-23 11:27:56.465 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:27:56.465 |     from .chat_routes import chat_bp
+2025-06-23 11:27:56.465 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:27:56.465 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:27:56.465 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:27:56.465 |     from processing import compute_model
+2025-06-23 11:27:56.465 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:27:56.465 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:27:56.465 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:27:56.465 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:27:56.465 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:27:56.465 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:56.465 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:27:56.465 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:27:56.465 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:27:56.465 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:27:56.465 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:27:56.465 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:27:56.465 | [2025-06-23 04:27:56 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:27:57.040 | [2025-06-23 04:27:57 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:27:57.040 | [2025-06-23 04:27:57 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:27:57.040 | [2025-06-23 04:27:57 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:27:57.994 | [2025-06-23 04:27:57 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:27:57.994 | [2025-06-23 04:27:57 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:27:57.994 | [2025-06-23 04:27:57 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:27:57.995 | [2025-06-23 04:27:57 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:27:58.101 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:27:58.101 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:28:00.296 | [2025-06-23 04:28:00 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:28:00.296 | Traceback (most recent call last):
+2025-06-23 11:28:00.296 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:28:00.296 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:28:00.296 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.296 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:28:00.296 |     return json.loads(text)
+2025-06-23 11:28:00.296 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.296 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:28:00.296 |     return _default_decoder.decode(s)
+2025-06-23 11:28:00.296 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.296 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:28:00.297 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:28:00.297 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:28:00.297 | 
+2025-06-23 11:28:00.297 | During handling of the above exception, another exception occurred:
+2025-06-23 11:28:00.297 | 
+2025-06-23 11:28:00.297 | Traceback (most recent call last):
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:28:00.297 |     worker.init_process()
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:28:00.297 |     self.load_wsgi()
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:28:00.297 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:28:00.297 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:28:00.297 |     self.callable = self.load()
+2025-06-23 11:28:00.297 |                     ^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:28:00.297 |     return self.load_wsgiapp()
+2025-06-23 11:28:00.297 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:28:00.297 |     return util.import_app(self.app_uri)
+2025-06-23 11:28:00.297 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:28:00.297 |     mod = importlib.import_module(module)
+2025-06-23 11:28:00.297 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:28:00.297 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:28:00.297 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:28:00.297 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:28:00.297 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:28:00.297 |     from routes import register_routes
+2025-06-23 11:28:00.297 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:28:00.297 |     from .chat_routes import chat_bp
+2025-06-23 11:28:00.297 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:28:00.297 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:28:00.297 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:28:00.297 |     from processing import compute_model
+2025-06-23 11:28:00.297 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:28:00.297 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:28:00.297 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:28:00.297 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:28:00.297 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:28:00.297 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:00.297 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:28:00.297 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:00.297 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:00.297 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:28:00.297 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:28:00.297 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:28:00.297 | [2025-06-23 04:28:00 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:28:00.903 | [2025-06-23 04:28:00 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:28:00.903 | [2025-06-23 04:28:00 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:28:00.903 | [2025-06-23 04:28:00 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:28:02.687 | [2025-06-23 04:28:02 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:28:02.687 | [2025-06-23 04:28:02 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:28:02.687 | [2025-06-23 04:28:02 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:28:02.688 | [2025-06-23 04:28:02 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:28:02.817 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:28:02.817 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:28:05.202 | [2025-06-23 04:28:05 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:28:05.202 | Traceback (most recent call last):
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:28:05.202 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:28:05.202 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:28:05.202 |     return json.loads(text)
+2025-06-23 11:28:05.202 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:28:05.202 |     return _default_decoder.decode(s)
+2025-06-23 11:28:05.202 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:28:05.202 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:28:05.202 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:28:05.202 | 
+2025-06-23 11:28:05.202 | During handling of the above exception, another exception occurred:
+2025-06-23 11:28:05.202 | 
+2025-06-23 11:28:05.202 | Traceback (most recent call last):
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:28:05.202 |     worker.init_process()
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:28:05.202 |     self.load_wsgi()
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:28:05.202 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:28:05.202 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:28:05.202 |     self.callable = self.load()
+2025-06-23 11:28:05.202 |                     ^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:28:05.202 |     return self.load_wsgiapp()
+2025-06-23 11:28:05.202 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:28:05.202 |     return util.import_app(self.app_uri)
+2025-06-23 11:28:05.202 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:28:05.202 |     mod = importlib.import_module(module)
+2025-06-23 11:28:05.202 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:28:05.202 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:28:05.202 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:28:05.202 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:28:05.202 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:28:05.202 |     from routes import register_routes
+2025-06-23 11:28:05.202 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:28:05.202 |     from .chat_routes import chat_bp
+2025-06-23 11:28:05.202 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:28:05.202 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:28:05.202 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:28:05.202 |     from processing import compute_model
+2025-06-23 11:28:05.202 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:28:05.202 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:28:05.202 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:28:05.202 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:28:05.202 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:28:05.202 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:05.202 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:28:05.202 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:05.202 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:05.202 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:28:05.202 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:28:05.202 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:28:05.202 | [2025-06-23 04:28:05 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:28:05.752 | [2025-06-23 04:28:05 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:28:05.753 | [2025-06-23 04:28:05 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:28:05.753 | [2025-06-23 04:28:05 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:28:09.109 | [2025-06-23 04:28:09 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:28:09.109 | [2025-06-23 04:28:09 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:28:09.109 | [2025-06-23 04:28:09 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:28:09.111 | [2025-06-23 04:28:09 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:28:09.237 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:28:09.237 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:28:11.219 | [2025-06-23 04:28:11 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:28:11.219 | Traceback (most recent call last):
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:28:11.219 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:28:11.219 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:28:11.219 |     return json.loads(text)
+2025-06-23 11:28:11.219 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:28:11.219 |     return _default_decoder.decode(s)
+2025-06-23 11:28:11.219 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:28:11.219 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:28:11.219 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:28:11.219 | 
+2025-06-23 11:28:11.219 | During handling of the above exception, another exception occurred:
+2025-06-23 11:28:11.219 | 
+2025-06-23 11:28:11.219 | Traceback (most recent call last):
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:28:11.219 |     worker.init_process()
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:28:11.219 |     self.load_wsgi()
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:28:11.219 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:28:11.219 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:28:11.219 |     self.callable = self.load()
+2025-06-23 11:28:11.219 |                     ^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:28:11.219 |     return self.load_wsgiapp()
+2025-06-23 11:28:11.219 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:28:11.219 |     return util.import_app(self.app_uri)
+2025-06-23 11:28:11.219 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:28:11.219 |     mod = importlib.import_module(module)
+2025-06-23 11:28:11.219 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:28:11.219 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:28:11.219 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:28:11.219 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:28:11.219 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:28:11.219 |     from routes import register_routes
+2025-06-23 11:28:11.219 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:28:11.219 |     from .chat_routes import chat_bp
+2025-06-23 11:28:11.219 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:28:11.219 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:28:11.219 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:28:11.219 |     from processing import compute_model
+2025-06-23 11:28:11.219 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:28:11.219 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:28:11.219 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:28:11.219 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:28:11.219 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:28:11.219 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:11.219 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:28:11.219 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:11.219 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:11.219 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:28:11.219 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:28:11.219 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:28:11.219 | [2025-06-23 04:28:11 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:28:12.010 | [2025-06-23 04:28:12 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:28:12.010 | [2025-06-23 04:28:12 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:28:12.010 | [2025-06-23 04:28:12 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:28:18.589 | [2025-06-23 04:28:18 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:28:18.589 | [2025-06-23 04:28:18 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:28:18.589 | [2025-06-23 04:28:18 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:28:18.590 | [2025-06-23 04:28:18 +0000] [8] [INFO] Booting worker with pid: 8
+2025-06-23 11:28:18.704 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:28:18.704 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:28:20.941 | [2025-06-23 04:28:20 +0000] [8] [ERROR] Exception in worker process
+2025-06-23 11:28:20.941 | Traceback (most recent call last):
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:28:20.941 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:28:20.941 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:28:20.941 |     return json.loads(text)
+2025-06-23 11:28:20.941 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:28:20.941 |     return _default_decoder.decode(s)
+2025-06-23 11:28:20.941 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:28:20.941 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:28:20.941 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:28:20.941 | 
+2025-06-23 11:28:20.941 | During handling of the above exception, another exception occurred:
+2025-06-23 11:28:20.941 | 
+2025-06-23 11:28:20.941 | Traceback (most recent call last):
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:28:20.941 |     worker.init_process()
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:28:20.941 |     self.load_wsgi()
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:28:20.941 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:28:20.941 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:28:20.941 |     self.callable = self.load()
+2025-06-23 11:28:20.941 |                     ^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:28:20.941 |     return self.load_wsgiapp()
+2025-06-23 11:28:20.941 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:28:20.941 |     return util.import_app(self.app_uri)
+2025-06-23 11:28:20.941 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:28:20.941 |     mod = importlib.import_module(module)
+2025-06-23 11:28:20.941 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:28:20.941 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:28:20.941 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:28:20.941 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:28:20.941 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:28:20.941 |     from routes import register_routes
+2025-06-23 11:28:20.941 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:28:20.941 |     from .chat_routes import chat_bp
+2025-06-23 11:28:20.941 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:28:20.941 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:28:20.941 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:28:20.941 |     from processing import compute_model
+2025-06-23 11:28:20.941 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:28:20.941 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:28:20.941 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:28:20.941 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:28:20.941 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:28:20.941 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:20.941 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:28:20.941 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:20.941 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:20.941 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:28:20.941 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:28:20.941 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:28:20.941 | [2025-06-23 04:28:20 +0000] [8] [INFO] Worker exiting (pid: 8)
+2025-06-23 11:28:21.522 | [2025-06-23 04:28:21 +0000] [1] [ERROR] Worker (pid:8) exited with code 3
+2025-06-23 11:28:21.522 | [2025-06-23 04:28:21 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:28:21.522 | [2025-06-23 04:28:21 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:28:34.490 | [2025-06-23 04:28:34 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:28:34.490 | [2025-06-23 04:28:34 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:28:34.490 | [2025-06-23 04:28:34 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:28:34.492 | [2025-06-23 04:28:34 +0000] [6] [INFO] Booting worker with pid: 6
+2025-06-23 11:28:34.624 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:28:34.624 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:28:37.163 | [2025-06-23 04:28:37 +0000] [6] [ERROR] Exception in worker process
+2025-06-23 11:28:37.163 | Traceback (most recent call last):
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:28:37.163 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:28:37.163 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:28:37.163 |     return json.loads(text)
+2025-06-23 11:28:37.163 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:28:37.163 |     return _default_decoder.decode(s)
+2025-06-23 11:28:37.163 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:28:37.163 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:28:37.163 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:28:37.163 | 
+2025-06-23 11:28:37.163 | During handling of the above exception, another exception occurred:
+2025-06-23 11:28:37.163 | 
+2025-06-23 11:28:37.163 | Traceback (most recent call last):
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:28:37.163 |     worker.init_process()
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:28:37.163 |     self.load_wsgi()
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:28:37.163 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:28:37.163 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:28:37.163 |     self.callable = self.load()
+2025-06-23 11:28:37.163 |                     ^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:28:37.163 |     return self.load_wsgiapp()
+2025-06-23 11:28:37.163 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:28:37.163 |     return util.import_app(self.app_uri)
+2025-06-23 11:28:37.163 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:28:37.163 |     mod = importlib.import_module(module)
+2025-06-23 11:28:37.163 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:28:37.163 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:28:37.163 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:28:37.163 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:28:37.163 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:28:37.163 |     from routes import register_routes
+2025-06-23 11:28:37.163 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:28:37.163 |     from .chat_routes import chat_bp
+2025-06-23 11:28:37.163 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:28:37.163 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:28:37.163 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:28:37.163 |     from processing import compute_model
+2025-06-23 11:28:37.163 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:28:37.163 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:28:37.163 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:28:37.163 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:28:37.163 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:28:37.163 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:37.163 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:28:37.163 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:28:37.163 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:28:37.163 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:28:37.163 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:28:37.163 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:28:37.163 | [2025-06-23 04:28:37 +0000] [6] [INFO] Worker exiting (pid: 6)
+2025-06-23 11:28:37.931 | [2025-06-23 04:28:37 +0000] [1] [ERROR] Worker (pid:6) exited with code 3
+2025-06-23 11:28:37.932 | [2025-06-23 04:28:37 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:28:37.932 | [2025-06-23 04:28:37 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:29:03.713 | [2025-06-23 04:29:03 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:29:03.713 | [2025-06-23 04:29:03 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:29:03.713 | [2025-06-23 04:29:03 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:29:03.714 | [2025-06-23 04:29:03 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:29:03.833 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:29:03.833 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:29:06.355 | [2025-06-23 04:29:06 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:29:06.355 | Traceback (most recent call last):
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:29:06.355 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:29:06.355 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:29:06.355 |     return json.loads(text)
+2025-06-23 11:29:06.355 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:29:06.355 |     return _default_decoder.decode(s)
+2025-06-23 11:29:06.355 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:29:06.355 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:29:06.355 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:29:06.355 | 
+2025-06-23 11:29:06.355 | During handling of the above exception, another exception occurred:
+2025-06-23 11:29:06.355 | 
+2025-06-23 11:29:06.355 | Traceback (most recent call last):
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:29:06.355 |     worker.init_process()
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:29:06.355 |     self.load_wsgi()
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:29:06.355 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:29:06.355 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:29:06.355 |     self.callable = self.load()
+2025-06-23 11:29:06.355 |                     ^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:29:06.355 |     return self.load_wsgiapp()
+2025-06-23 11:29:06.355 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:29:06.355 |     return util.import_app(self.app_uri)
+2025-06-23 11:29:06.355 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:29:06.355 |     mod = importlib.import_module(module)
+2025-06-23 11:29:06.355 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:29:06.355 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:29:06.355 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:29:06.355 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:29:06.355 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:29:06.355 |     from routes import register_routes
+2025-06-23 11:29:06.355 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:29:06.355 |     from .chat_routes import chat_bp
+2025-06-23 11:29:06.355 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:29:06.355 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:29:06.355 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:29:06.355 |     from processing import compute_model
+2025-06-23 11:29:06.355 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:29:06.355 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:29:06.355 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:29:06.355 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:29:06.355 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:29:06.355 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:29:06.355 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:29:06.355 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:29:06.355 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:29:06.355 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:29:06.355 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:29:06.355 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:29:06.355 | [2025-06-23 04:29:06 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:29:07.132 | [2025-06-23 04:29:07 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:29:07.132 | [2025-06-23 04:29:07 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:29:07.132 | [2025-06-23 04:29:07 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:29:58.565 | [2025-06-23 04:29:58 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:29:58.565 | [2025-06-23 04:29:58 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:29:58.565 | [2025-06-23 04:29:58 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:29:58.567 | [2025-06-23 04:29:58 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:29:58.699 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:29:58.699 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:30:00.609 | [2025-06-23 04:30:00 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:30:00.609 | Traceback (most recent call last):
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:30:00.609 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:30:00.609 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:30:00.609 |     return json.loads(text)
+2025-06-23 11:30:00.609 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:30:00.609 |     return _default_decoder.decode(s)
+2025-06-23 11:30:00.609 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:30:00.609 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:30:00.609 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:30:00.609 | 
+2025-06-23 11:30:00.609 | During handling of the above exception, another exception occurred:
+2025-06-23 11:30:00.609 | 
+2025-06-23 11:30:00.609 | Traceback (most recent call last):
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:30:00.609 |     worker.init_process()
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:30:00.609 |     self.load_wsgi()
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:30:00.609 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:30:00.609 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:30:00.609 |     self.callable = self.load()
+2025-06-23 11:30:00.609 |                     ^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:30:00.609 |     return self.load_wsgiapp()
+2025-06-23 11:30:00.609 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:30:00.609 |     return util.import_app(self.app_uri)
+2025-06-23 11:30:00.609 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:30:00.609 |     mod = importlib.import_module(module)
+2025-06-23 11:30:00.609 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:30:00.609 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:30:00.609 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:30:00.609 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:30:00.609 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:30:00.609 |     from routes import register_routes
+2025-06-23 11:30:00.609 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:30:00.609 |     from .chat_routes import chat_bp
+2025-06-23 11:30:00.609 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:30:00.609 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:30:00.609 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:30:00.609 |     from processing import compute_model
+2025-06-23 11:30:00.609 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:30:00.609 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:30:00.609 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:30:00.609 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:30:00.609 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:30:00.609 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:30:00.609 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:30:00.609 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:30:00.609 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:30:00.609 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:30:00.609 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:30:00.609 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:30:00.609 | [2025-06-23 04:30:00 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:30:01.091 | [2025-06-23 04:30:01 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:30:01.091 | [2025-06-23 04:30:01 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:30:01.091 | [2025-06-23 04:30:01 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:39:18.580 | [2025-06-23 04:39:18 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:39:18.580 | [2025-06-23 04:39:18 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:39:18.580 | [2025-06-23 04:39:18 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:39:18.581 | [2025-06-23 04:39:18 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:39:18.683 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:39:18.683 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:39:20.420 | [2025-06-23 04:39:20 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:39:20.420 | Traceback (most recent call last):
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:39:20.420 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:39:20.420 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:39:20.420 |     return json.loads(text)
+2025-06-23 11:39:20.420 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:39:20.420 |     return _default_decoder.decode(s)
+2025-06-23 11:39:20.420 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:39:20.420 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:39:20.420 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:39:20.420 | 
+2025-06-23 11:39:20.420 | During handling of the above exception, another exception occurred:
+2025-06-23 11:39:20.420 | 
+2025-06-23 11:39:20.420 | Traceback (most recent call last):
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:39:20.420 |     worker.init_process()
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:39:20.420 |     self.load_wsgi()
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:39:20.420 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:39:20.420 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:39:20.420 |     self.callable = self.load()
+2025-06-23 11:39:20.420 |                     ^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:39:20.420 |     return self.load_wsgiapp()
+2025-06-23 11:39:20.420 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:39:20.420 |     return util.import_app(self.app_uri)
+2025-06-23 11:39:20.420 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:39:20.420 |     mod = importlib.import_module(module)
+2025-06-23 11:39:20.420 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:39:20.420 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:39:20.420 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:39:20.420 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:39:20.420 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:39:20.420 |     from routes import register_routes
+2025-06-23 11:39:20.420 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:39:20.420 |     from .chat_routes import chat_bp
+2025-06-23 11:39:20.420 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:39:20.420 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:39:20.420 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:39:20.420 |     from processing import compute_model
+2025-06-23 11:39:20.420 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:39:20.420 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:39:20.420 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:39:20.420 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:39:20.420 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:39:20.420 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:39:20.420 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:39:20.420 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:39:20.420 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:39:20.420 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:39:20.420 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:39:20.420 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:39:20.420 | [2025-06-23 04:39:20 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:39:21.006 | [2025-06-23 04:39:21 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:39:21.007 | [2025-06-23 04:39:21 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:39:21.007 | [2025-06-23 04:39:21 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:40:21.207 | [2025-06-23 04:40:21 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:40:21.207 | [2025-06-23 04:40:21 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:40:21.207 | [2025-06-23 04:40:21 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:40:21.208 | [2025-06-23 04:40:21 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:40:21.350 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:40:21.350 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:40:23.918 | [2025-06-23 04:40:23 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:40:23.918 | Traceback (most recent call last):
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:40:23.918 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:40:23.918 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:40:23.918 |     return json.loads(text)
+2025-06-23 11:40:23.918 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:40:23.918 |     return _default_decoder.decode(s)
+2025-06-23 11:40:23.918 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:40:23.918 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:40:23.918 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:40:23.918 | 
+2025-06-23 11:40:23.918 | During handling of the above exception, another exception occurred:
+2025-06-23 11:40:23.918 | 
+2025-06-23 11:40:23.918 | Traceback (most recent call last):
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:40:23.918 |     worker.init_process()
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:40:23.918 |     self.load_wsgi()
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:40:23.918 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:40:23.918 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:40:23.918 |     self.callable = self.load()
+2025-06-23 11:40:23.918 |                     ^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:40:23.918 |     return self.load_wsgiapp()
+2025-06-23 11:40:23.918 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:40:23.918 |     return util.import_app(self.app_uri)
+2025-06-23 11:40:23.918 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:40:23.918 |     mod = importlib.import_module(module)
+2025-06-23 11:40:23.918 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:40:23.918 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:40:23.918 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:40:23.918 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:40:23.918 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:40:23.918 |     from routes import register_routes
+2025-06-23 11:40:23.918 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:40:23.918 |     from .chat_routes import chat_bp
+2025-06-23 11:40:23.918 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:40:23.918 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:40:23.918 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:40:23.918 |     from processing import compute_model
+2025-06-23 11:40:23.918 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:40:23.918 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:40:23.918 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:40:23.918 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:40:23.918 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:40:23.918 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:40:23.918 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:40:23.918 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:40:23.918 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:40:23.918 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:40:23.918 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:40:23.918 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:40:23.918 | [2025-06-23 04:40:23 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:40:24.631 | [2025-06-23 04:40:24 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:40:24.631 | [2025-06-23 04:40:24 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:40:24.631 | [2025-06-23 04:40:24 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:41:24.797 | [2025-06-23 04:41:24 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:41:24.797 | [2025-06-23 04:41:24 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:41:24.797 | [2025-06-23 04:41:24 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:41:24.798 | [2025-06-23 04:41:24 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:41:24.895 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:41:24.895 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:41:26.587 | [2025-06-23 04:41:26 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:41:26.587 | Traceback (most recent call last):
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:41:26.587 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:41:26.587 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:41:26.587 |     return json.loads(text)
+2025-06-23 11:41:26.587 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:41:26.587 |     return _default_decoder.decode(s)
+2025-06-23 11:41:26.587 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:41:26.587 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:41:26.587 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:41:26.587 | 
+2025-06-23 11:41:26.587 | During handling of the above exception, another exception occurred:
+2025-06-23 11:41:26.587 | 
+2025-06-23 11:41:26.587 | Traceback (most recent call last):
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:41:26.587 |     worker.init_process()
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:41:26.587 |     self.load_wsgi()
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:41:26.587 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:41:26.587 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:41:26.587 |     self.callable = self.load()
+2025-06-23 11:41:26.587 |                     ^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:41:26.587 |     return self.load_wsgiapp()
+2025-06-23 11:41:26.587 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:41:26.587 |     return util.import_app(self.app_uri)
+2025-06-23 11:41:26.587 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:41:26.587 |     mod = importlib.import_module(module)
+2025-06-23 11:41:26.587 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:41:26.587 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:41:26.587 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:41:26.587 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:41:26.587 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:41:26.587 |     from routes import register_routes
+2025-06-23 11:41:26.587 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:41:26.587 |     from .chat_routes import chat_bp
+2025-06-23 11:41:26.587 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:41:26.587 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:41:26.587 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:41:26.587 |     from processing import compute_model
+2025-06-23 11:41:26.587 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:41:26.587 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:41:26.587 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:41:26.587 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:41:26.587 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:41:26.587 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:41:26.587 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:41:26.587 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:41:26.587 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:41:26.587 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:41:26.587 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:41:26.587 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:41:26.587 | [2025-06-23 04:41:26 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:41:27.219 | [2025-06-23 04:41:27 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:41:27.219 | [2025-06-23 04:41:27 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:41:27.219 | [2025-06-23 04:41:27 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:42:27.484 | [2025-06-23 04:42:27 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:42:27.485 | [2025-06-23 04:42:27 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:42:27.485 | [2025-06-23 04:42:27 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:42:27.487 | [2025-06-23 04:42:27 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:42:27.623 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:42:27.623 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:42:30.383 | [2025-06-23 04:42:30 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:42:30.383 | Traceback (most recent call last):
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:42:30.383 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:42:30.383 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:42:30.383 |     return json.loads(text)
+2025-06-23 11:42:30.383 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:42:30.383 |     return _default_decoder.decode(s)
+2025-06-23 11:42:30.383 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:42:30.383 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:42:30.383 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:42:30.383 | 
+2025-06-23 11:42:30.383 | During handling of the above exception, another exception occurred:
+2025-06-23 11:42:30.383 | 
+2025-06-23 11:42:30.383 | Traceback (most recent call last):
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:42:30.383 |     worker.init_process()
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:42:30.383 |     self.load_wsgi()
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:42:30.383 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:42:30.383 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:42:30.383 |     self.callable = self.load()
+2025-06-23 11:42:30.383 |                     ^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:42:30.383 |     return self.load_wsgiapp()
+2025-06-23 11:42:30.383 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:42:30.383 |     return util.import_app(self.app_uri)
+2025-06-23 11:42:30.383 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:42:30.383 |     mod = importlib.import_module(module)
+2025-06-23 11:42:30.383 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:42:30.383 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:42:30.383 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:42:30.383 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:42:30.383 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:42:30.383 |     from routes import register_routes
+2025-06-23 11:42:30.383 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:42:30.383 |     from .chat_routes import chat_bp
+2025-06-23 11:42:30.383 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:42:30.383 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:42:30.383 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:42:30.383 |     from processing import compute_model
+2025-06-23 11:42:30.383 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:42:30.383 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:42:30.383 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:42:30.383 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:42:30.383 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:42:30.383 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:42:30.383 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:42:30.383 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:42:30.383 |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:42:30.383 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:42:30.383 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:42:30.383 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:42:30.383 | [2025-06-23 04:42:30 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:42:31.186 | [2025-06-23 04:42:31 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:42:31.186 | [2025-06-23 04:42:31 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:42:31.186 | [2025-06-23 04:42:31 +0000] [1] [ERROR] Reason: Worker failed to boot.
+2025-06-23 11:43:31.374 | [2025-06-23 04:43:31 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2025-06-23 11:43:31.375 | [2025-06-23 04:43:31 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+2025-06-23 11:43:31.375 | [2025-06-23 04:43:31 +0000] [1] [INFO] Using worker: sync
+2025-06-23 11:43:31.376 | [2025-06-23 04:43:31 +0000] [7] [INFO] Booting worker with pid: 7
+2025-06-23 11:43:31.494 | /usr/local/lib/python3.12/site-packages/pymilvus/client/__init__.py:6: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+2025-06-23 11:43:31.494 |   from pkg_resources import DistributionNotFound, get_distribution
+2025-06-23 11:43:34.008 | [2025-06-23 04:43:34 +0000] [7] [ERROR] Exception in worker process
+2025-06-23 11:43:34.008 | Traceback (most recent call last):
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 689, in _get_config_dict
+2025-06-23 11:43:34.008 |     config_dict = cls._dict_from_json_file(resolved_config_file)
+2025-06-23 11:43:34.008 |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 796, in _dict_from_json_file
+2025-06-23 11:43:34.008 |     return json.loads(text)
+2025-06-23 11:43:34.008 |            ^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+2025-06-23 11:43:34.008 |     return _default_decoder.decode(s)
+2025-06-23 11:43:34.008 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/json/decoder.py", line 341, in decode
+2025-06-23 11:43:34.008 |     raise JSONDecodeError("Extra data", s, end)
+2025-06-23 11:43:34.008 | json.decoder.JSONDecodeError: Extra data: line 29 column 1 (char 687)
+2025-06-23 11:43:34.008 | 
+2025-06-23 11:43:34.008 | During handling of the above exception, another exception occurred:
+2025-06-23 11:43:34.008 | 
+2025-06-23 11:43:34.008 | Traceback (most recent call last):
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/arbiter.py", line 608, in spawn_worker
+2025-06-23 11:43:34.008 |     worker.init_process()
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 135, in init_process
+2025-06-23 11:43:34.008 |     self.load_wsgi()
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/workers/base.py", line 147, in load_wsgi
+2025-06-23 11:43:34.008 |     self.wsgi = self.app.wsgi()
+2025-06-23 11:43:34.008 |                 ^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py", line 66, in wsgi
+2025-06-23 11:43:34.008 |     self.callable = self.load()
+2025-06-23 11:43:34.008 |                     ^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 57, in load
+2025-06-23 11:43:34.008 |     return self.load_wsgiapp()
+2025-06-23 11:43:34.008 |            ^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 47, in load_wsgiapp
+2025-06-23 11:43:34.008 |     return util.import_app(self.app_uri)
+2025-06-23 11:43:34.008 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/gunicorn/util.py", line 370, in import_app
+2025-06-23 11:43:34.008 |     mod = importlib.import_module(module)
+2025-06-23 11:43:34.008 |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+2025-06-23 11:43:34.008 |     return _bootstrap._gcd_import(name[level:], package, level)
+2025-06-23 11:43:34.008 |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+2025-06-23 11:43:34.008 |   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+2025-06-23 11:43:34.008 |   File "/app/main.py", line 2, in <module>
+2025-06-23 11:43:34.008 |     from routes import register_routes
+2025-06-23 11:43:34.008 |   File "/app/routes/__init__.py", line 2, in <module>
+2025-06-23 11:43:34.008 |     from .chat_routes import chat_bp
+2025-06-23 11:43:34.008 |   File "/app/routes/chat_routes.py", line 8, in <module>
+2025-06-23 11:43:34.008 |     from controllers.chat_controller import room_line_option_by_id_get
+2025-06-23 11:43:34.008 |   File "/app/controllers/chat_controller.py", line 8, in <module>
+2025-06-23 11:43:34.008 |     from processing import compute_model
+2025-06-23 11:43:34.008 |   File "/app/processing.py", line 104, in <module>
+2025-06-23 11:43:34.008 |     bge_model = AutoModel.from_pretrained("BAAI/bge-m3")
+2025-06-23 11:43:34.008 |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 531, in from_pretrained
+2025-06-23 11:43:34.008 |     config, kwargs = AutoConfig.from_pretrained(
+2025-06-23 11:43:34.008 |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1153, in from_pretrained
+2025-06-23 11:43:34.008 |     config_dict, unused_kwargs = PretrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:43:34.008 |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 595, in get_config_dict
+2025-06-23 11:43:34.008 |     config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+2025-06-23 11:43:34.008 |                     ss      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-23 11:43:34.008 |   File "/usr/local/lib/python3.12/site-packages/transformers/configuration_utils.py", line 693, in _get_config_dict
+2025-06-23 11:43:34.008 |     raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+2025-06-23 11:43:34.008 | OSError: It looks like the config file at '/root/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181/config.json' is not a valid JSON file.
+2025-06-23 11:43:34.008 | [2025-06-23 04:43:34 +0000] [7] [INFO] Worker exiting (pid: 7)
+2025-06-23 11:43:34.569 | [2025-06-23 04:43:34 +0000] [1] [ERROR] Worker (pid:7) exited with code 3
+2025-06-23 11:43:34.569 | [2025-06-23 04:43:34 +0000] [1] [ERROR] Shutting down: Master
+2025-06-23 11:43:34.569 | [2025-06-23 04:43:34 +0000] [1] [ERROR] Reason: Worker failed to boot.ss

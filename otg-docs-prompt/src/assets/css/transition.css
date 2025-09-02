@@ -1,0 +1,26 @@
+.submenu {
+  overflow: hidden;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  max-height: 0;
+}
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+  max-height: 400px;
+  /* กำหนดสูงสุดของเมนูย่อยตามความสูงจริง */
+}
+
+
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}

@@ -1,0 +1,194 @@
+version: '3.9'
+
+services:
+  # llama-server-cpp:   # https://github.com/ggml-org/llama.cpp/releases/tag/b5468
+  #   build: ./build
+  #   # working_dir: /build/bin/
+  #   tty: true
+  #   restart: unless-stopped
+  #   container_name: llama-server-cpp
+  #   ports:
+  #     - "8001:8000"
+  #   environment:
+  #     - LD_LIBRARY_PATH=/build/bin
+  #   command: ["/build/bin/llama-server", "-m", "typhoon2.1-gemma3-12b-q4_k_m.gguf", "--host", "0.0.0.0", "--port", "8000"]
+
+
+
+  ollama:
+    container_name: ollamaserver
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "11434:11434"  # <-- Add this line to expose the port
+    volumes:
+      - ollama:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apt-get update && apt-get install -y curl && \
+        ollama serve & \
+        until curl -s http://localhost:11434 > /dev/null; do \
+          echo "Waiting for Ollama server..."; sleep 1; \
+        done && \
+        echo "Ollama server is up. Pulling models..." && \
+        ollama pull tinyllama && \
+        ollama pull gemma2:2b && \
+        echo "Models pulled successfully. Tailing logs..." && \
+        tail -f /dev/null
+    
+    # command:
+    #   - |
+    #     # Update package lists and install curl using apt
+    #     apt-get update && apt-get install -y curl && \
+    #     # Start the Ollama server
+    #     ollama serve & \
+    #     # Wait for Ollama to be ready
+    #     until curl -s http://localhost:11434 > /dev/null; do
+    #       echo "Waiting for Ollama..."; sleep 1;
+    #     done && \
+    #     # Once ready, pull and run the model
+    #     echo "Connected to Ollama. Pulling model..." && \
+    #     ollama run phi4-mini:latest && \
+    #     # Wait to keep the container running
+    #     ollama run tinyllama:1.1b
+    #     ollama run gemma2:2b
+    #     wait
+
+  # open-webui:
+  #   build:
+  #     context: .
+  #     args:
+  #       OLLAMA_BASE_URL: '/ollama'
+  #     dockerfile: Dockerfile
+  #   image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+  #   container_name: open-webui
+  #   volumes:
+  #     - open-webui:/app/backend/data
+  #   depends_on:
+  #     - ollama
+  #   ports:
+  #     - "3000:8080"
+  #   environment:
+  #     - 'OLLAMA_BASE_URL=http://ollama:11434'
+  #   restart: unless-stopped
+  
+  flask:
+    container_name: backend
+    build: ./openthairag
+    restart: always
+    ports:
+      - "5500:5000"
+    volumes:
+      - ./openthairag/app:/app
+      # - ~/.cache:/root/.cache
+    environment:
+      - MILVUS_HOST=milvus
+      - MILVUS_PORT=19530
+    depends_on:
+      milvus:
+        condition: service_started
+      mongo:
+        condition: service_started
+
+  otg-docs-prompt-frontend:
+    container_name: Frontend
+    image: node:18-bookworm-slim
+    working_dir: /app
+    volumes:
+      - ./otg-docs-prompt:/app
+    ports:
+      - "5173:5173"
+    command: >
+      sh -c "npm install && npm run dev"
+    environment:
+      - VITE_API_BASE_URL=http://${SERVER_IP:-52.91.243.199}:5500
+      - VITE_OLLAMA_HOST=http://ollama:11434/v1
+    depends_on:
+      milvus:
+        condition: service_started
+      mongo:
+        condition: service_started
+      flask:
+        condition: service_started
+
+
+  milvus:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.4.7
+    command: ["milvus", "run", "standalone"]
+    volumes:
+      - ./milvus_data:/var/lib/milvus
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+    ports:
+      - "19530:19530"
+    depends_on:
+      - etcd
+      - minio
+      
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.0
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+    volumes:
+      - ./etcd_data:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+
+  minio:
+    container_name: milvus-minio
+    image: minio/minio:RELEASE.2020-12-03T00-03-10Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - ./minio_data:/data
+    command: minio server /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  mongo:
+    container_name: database
+    image: mongo:4.4
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+      - MONGO_INITDB_DATABASE=otg_db
+      - MONGO_INITDB_USERNAME=admin
+      - MONGO_INITDB_PASSWORD=admin
+    volumes:
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - ./db:/data/db
+
+  # nginx:
+  #   container_name: nginx-proxy
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - /etc/letsencrypt:/etc/letsencrypt:ro
+  #   depends_on:
+  #     - flask
+  #     - otg-docs-prompt-frontend
+  #     - ollama
+  #   restart: unless-stopped
+
+volumes:
+  milvus_data:
+  etcd_data:
+  minio_data:
+  ollama: {}
+  # open-webui: {}
