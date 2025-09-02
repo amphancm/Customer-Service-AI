@@ -41,7 +41,6 @@ def get_model_env():
     """
     setting = mongo.setting.find_one({}, {"_id": 0, "server": 1, "local": 1})
     if setting:
-        # Check 'server' first, then 'local'
         if setting.get("server", {}).get("enabled", False):
             config = setting["server"]
         elif setting.get("local", {}).get("enabled", False):
@@ -49,6 +48,8 @@ def get_model_env():
         else:
             config = {}
         return {
+            "isServer": config.get("enabled", False),
+            "isLocal": not config.get("enabled", False),
             "apikey": config.get("apikey", ""),
             "domainname": config.get("domainname", ""),
             "modelname": config.get("modelname", "")
@@ -60,8 +61,6 @@ def get_model_env():
 # Example usage:
 # env = get_model_env()
 # print(env["domainname"], env["apikey"], env["modelname"])
-
-
 
 # print(f"LLM_API_DOMAIN: {LLM_API_DOMAIN}")
 # print(f"LLM_API_KEY: {LLM_API_KEY}")
@@ -140,9 +139,18 @@ def rerank_documents(query_embedding, document_embeddings):
     ranked_documents = sorted(enumerate(similarities.flatten()), key=lambda x: x[1], reverse=True)
     return ranked_documents
 
+SYSTEM_PROMPT = "คุณคือ OpenThaiGPT พัฒนาโดยสมาคมผู้ประกอบการปัญญาประดิษฐ์ประเทศไทย (AIEAT)"
+
 def compute_model(query, arr_history, system_prompt, temperature):
+    prompt = [
+        {'role':'system', 'content': SYSTEM_PROMPT}
+        {'role':'system', 'content': f"""
+        This is extra prompt, please following the instruction after main system prompt
+        - {system_prompt}         
+         """.strip()
+         }
+    ]
     
-    # --- Insert this after the environment variable assignments ---
     setting_info = get_model_env()
     LLM_API_DOMAIN = setting_info.get('domainname')
     LLM_API_KEY    = setting_info.get('apikey')
@@ -154,161 +162,66 @@ def compute_model(query, arr_history, system_prompt, temperature):
     print(LLM_MODEL_NAME)
     # print(ollamaserver)
 
-    
-    assistant_message = None  # Initialize to avoid UnboundLocalError
+    try: 
+        logger.info(f"Getting context from Milvus for query: {query}")
+        assistant_message = None  # Initialize to avoid UnboundLocalError
 
-    query_embedding = generate_embedding(query).numpy().flatten().tolist()
-    
-    # Prepare search parameters
-    search_param = {
-        "metric_type": "L2",
-        "params": {"nprobe": 10},
-    }
+        query_embedding = generate_embedding(query).numpy().flatten().tolist()
+        
+        # Prepare search parameters
+        search_param = {
+            "metric_type": "L2",
+            "params": {"nprobe": 10},
+        }
 
-    if not collection.is_empty:
-    # Step 2: Retrieve top-10 documents from Milvus
+        if not collection.is_empty:
+        # Step 2: Retrieve top-10 documents from Milvus
 
-        try:
-            collection.load()
-            search_results = collection.search(
-                data=[query_embedding],
-                anns_field="embedding",
-                param=search_param,
-                limit=10,
-                output_fields=["id", "text", "embedding"],
-                expr=None
-            )
-        except Exception as e:
-            logger.error(f"Milvus search error: {e}")
-            return {"content": "Milvus search error: " + str(e)}
+            try:
+                collection.load()
+                search_results = collection.search(
+                    data=[query_embedding],
+                    anns_field="embedding",
+                    param=search_param,
+                    limit=10,
+                    output_fields=["id", "text", "embedding"],
+                    expr=None
+                )
+            except Exception as e:
+                logger.error(f"Milvus search error: {e}")
+                return {"content": "Milvus search error: " + str(e)}
 
-    # Extract document texts and embeddings
-    retrieved_documents = []
-    document_embeddings = []
-    for hits in search_results:
-        for hit in hits:
+        # Extract document texts and embeddings
+        retrieved_documents = []
+        document_embeddings = []
+        for hits in search_results:
+            for hit in hits:
 
-            retrieved_documents.append(hit.entity)
-            embedding = hit.entity.get('embedding')
+                retrieved_documents.append(hit.entity)
+                embedding = hit.entity.get('embedding')
 
-            if embedding is not None:
-                document_embeddings.append(embedding)
+                if embedding is not None:
+                    document_embeddings.append(embedding)
 
-    ranked_indices = rerank_documents(query_embedding, document_embeddings)
-    top_documents = [retrieved_documents[i] for i, _ in ranked_indices[:3]]
-
-    # system_prompt = os.environ.get('SYSTEM_PROMPT', 'คุณคือ OpenThaiGPT พัฒนาโดยสมาคมผู้ประกอบการปัญญาประดิษฐ์ประเทศไทย (AIEAT)')
-    prompt = f"จากเอกสารต่อไปนี้\n\n"
-    prompt += "\n\n".join([doc.get('text') for doc in top_documents])
-
-    prompt_chatml = []
-
-    prompt_chatml.append({
-        'role': 'system',
-        'content': 'คุณคือผู้ช่วยตอบคำถามที่ฉลาดและซื่อสัตย์ โปรดเลือกใช้ function get_more_detail ก่อนการตัดสินใจในการตอบคำถาม และเชื่อในข้อมูลจาก เอกสารเหล่านี้เท่านั้น \n\n'+system_prompt+'\n\n'+prompt 
-    })
-    for dat in arr_history:
-        prompt_chatml.append(dat)
-    prompt_chatml.append({
-        'role': 'user',
-        'content': query
-    })
-
-    # client = OpenAI(
-    #     base_url = 'http://localhost:11434/v1',
-    #     api_key='ollama', # required, but unused
-    # )
+        ranked_indices = rerank_documents(query_embedding, document_embeddings)
+        top_documents = [retrieved_documents[i] for i, _ in ranked_indices[:3]]
+        prompt = prompt.append({'role':'user', 'content': f"""
+Use the following context to answer the question.
+Context: {top_documents[0].get('text') if len(top_documents) > 0 else ""}
+        """}.strip())
+        logger.info(f"Top documents retrieved: {[doc.get('text') for doc in top_documents]}")
+        if len(top_documents) == 0:
+            return {"content": "No relevant documents found in the database."}
+    except Exception as e:
+        logger.error(f"Error during Milvus retrieval: {e}")
+        return {"content": "Error during Milvus retrieval: " + str(e)}
     
     client = OpenAI(
         base_url=f"{LLM_API_DOMAIN}",
         api_key=LLM_API_KEY,
     )
 
-    while True:
-        try:
-            print("Creating ChatCompletion...")
-            response = client.chat.completions.create(
-                model=LLM_MODEL_NAME,
-                messages=prompt_chatml,
-                tools=get_tools(),
-                temperature=float(temperature) if temperature != '' else 0.5,
-            )
-            assistant_message = response.choices[0].message
-            print(f"Assistant message: {assistant_message}")
-            prompt_chatml.append(assistant_message)
 
-            tools_supported = get_tools() is not None and len(get_tools()) > 0
-            tool_calls = getattr(assistant_message, "tool_calls", None)
-            if tools_supported and tool_calls and isinstance(tool_calls, list) and len(tool_calls) > 0:
-                print(f"Tool calls found: {tool_calls}")
-                for tool_call in tool_calls:
-                    call_id = getattr(tool_call, "id", None)
-                    print(f"Processing tool call with id: {call_id}")
-                    fn_call = getattr(tool_call, "function", None)
-                    if fn_call:
-                        print(f"Function call found: {fn_call}")
-                        fn_name = getattr(fn_call, "name", None)
-                        fn_args_str = getattr(fn_call, "arguments", "{}")
-                        try:
-                            fn_args = json.loads(fn_args_str)
-                        except Exception as e:
-                            print(f"Failed to parse function arguments: {e}")
-                            fn_args = {}
-                        print(f"Function call: {fn_name}, arguments: {fn_args}")
-
-                        fn = get_function_by_name(fn_name)
-                        fn_res = json.dumps(fn(**fn_args), ensure_ascii=False)
-                        print(f"Function result: {fn_res}")
-
-                        prompt_chatml.append({
-                            "role": "tool",
-                            "content": fn_res,
-                            "tool_call_id": call_id,
-                        })
-                        print(f"Updated messages after tool call: {prompt_chatml}")
-            else:
-                if not tools_supported:
-                    print("Tool calling not supported, processing as normal response.")
-                    # เรียก LLM ใหม่โดยไม่ส่ง tools argument
-                    response = client.chat.completions.create(
-                        model=LLM_MODEL_NAME,
-                        messages=prompt_chatml,
-                        temperature=float(temperature) if temperature != '' else 0.5,
-                    )
-                    assistant_message = response.choices[0].message
-                    print(f"Generated Text: {assistant_message.content}")
-                    return assistant_message
-                else:
-                    print("No tool calls made, exiting loop")
-                break
-
-        except Exception as e:
-            print(f"Error occurred: {str(e)}")
-            # If error message indicates tool calling is not supported, process as normal response
-            if "does not support tools" in str(e):
-                print("Model does not support tools. Processing as normal response.")
-                # เรียก LLM ใหม่โดยไม่ส่ง tools argument
-                response = client.chat.completions.create(
-                    model=LLM_MODEL_NAME,
-                    messages=prompt_chatml,
-                    temperature=float(temperature) if temperature != '' else 0.5,
-                )
-                assistant_message = response.choices[0].message
-                print(f"Generated Text: {assistant_message.content}")
-                return assistant_message
-            else:
-                break
-
-    try:
-        if assistant_message and hasattr(assistant_message, "content"):
-            print(f"Generated Text: {assistant_message.content}")
-            return assistant_message
-        else:
-            print("No assistant message generated.")
-            return {"content": "An error occurred and no response was generated."}
-    except Exception as e:
-        print(f"Final error: {e}")
-        return {"content": "An error occurred and no response was generated."}
 
 def get_function_by_name(name):
     print(f"Getting function by name: {name}")

@@ -159,80 +159,8 @@ def room_option_by_id_get(id):
     result = mongo.chatHistory.find({'_id': ObjectId(id)})
     return dumps(result[0]), 200
 
-# =============================
-
-# def system_history_post(data):
-#     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
-#     #print(result)
-#     mongo.chatHistory.update_one({
-#         '_id':ObjectId(data['id'])
-#     },
-#     {
-#         '$push': {
-#             "messages": {
-#                 '$each': [{
-#                     'role': 'user',
-#                     'content': data['message'],
-#                 }]
-#             }
-#         }
-#     })
-
-#     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
-
-#     otg = compute_model(
-#         data['message'],
-#         result['messages'],
-#         data['systemPrompt'] if 'systemPrompt' in data else '' ,
-#         data['temperature'] if 'temperature' in data else 0.5
-#     )
-
-#     message = {
-#         'role': 'assistant',
-#         'content': otg.content,
-#     }
-
-#     mongo.chatHistory.update_one({
-#         '_id':ObjectId(data['id'])
-#     },
-#     {
-#         '$push': {
-#             "messages": {
-#                 '$each': [message]
-#             }
-#         }
-#     })
-
-#     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
-
-#     if (len(result['messages']) < 3):
-#         res = compute_model(
-#             'ช่วยตั้งชื่อบทสนทนาให้หน่อย ขอแค่ชื่อเท่านั้น',
-#             result['messages'],
-#             data['systemPrompt'] if 'systemPrompt' in data else '' ,
-#             data['temperature'] if 'temperature' in data else 0.5
-#         )
-
-#         mongo.chatHistory.update_one({
-#             '_id':ObjectId(data['id'])
-#         },
-#         {
-#             '$set': {
-#                 'chatOption': {
-#                     "name": res.content.replace('"', ''),
-#                     "temperature": result['chatOption']['temperature'],
-#                     "systemPrompt": result['chatOption']['systemPrompt']
-#                 }
-#             }
-#         })
-    
-#     return {
-#         "title_name": res.content.replace('"', '') if result['chatOption']['name'] == "" else result['chatOption']['name'],
-#         "message": message
-#     }, 200
 
 def system_history_post(data):
-    # print(data)
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
     mongo.chatHistory.update_one({
@@ -258,10 +186,6 @@ def system_history_post(data):
         data.get('temperature', 0.5)
     )
     
-    print(otg)
-    print('##################################################')
-
-    # Handle both string and object responses from compute_model
     if isinstance(otg, str):
         assistant_content = otg
     elif hasattr(otg, 'content'):
