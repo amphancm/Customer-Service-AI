@@ -12,6 +12,9 @@ import mammoth , requests
 from io import BytesIO
 from db import Connection
 import uuid
+from flask_cors import CORS
+
+
 
 
 
@@ -26,10 +29,9 @@ VLLM_HOST = os.environ.get('VLLM_HOST', '172.17.0.1:8000')
 
 app = Flask(__name__)
 # Enable CORS with full access for development
-CORS(app)
+CORS(app, expose_headers=["Content-Disposition"])
 app.config.from_object(Config)
 register_routes(app)
-
 mongo=Connection('otg_db')
 
 UPLOAD_FOLDER = 'uploads'

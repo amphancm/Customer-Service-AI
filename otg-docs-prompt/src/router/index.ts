@@ -18,6 +18,7 @@ import EditProductView from '@/views/EditProductView.vue'
 import EditIssueView from '@/views/EditIssueView.vue'
 import Debug from '@/views/Debug.vue'
 import EditDocumentModal from '@/components/EditDocumentModal.vue'
+import UploadDocsView from '@/views/UploadDocsView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +31,11 @@ const router = createRouter({
       path: '/docs',
       name: 'docs',
       component: DocsView,
+    },
+    {
+      path: '/upload-documents',
+      name: 'upload doc file',
+      component: UploadDocsView,
     },
     {
       path: '/products',

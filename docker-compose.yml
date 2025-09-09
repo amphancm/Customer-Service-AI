@@ -61,6 +61,7 @@ services:
     command: >
       sh -c "npm install && npm run dev"
     environment:
+      - CHOKIDAR_USEPOLLING=true
       - VITE_API_BASE_URL=http://${SERVER_IP}:5500
       - VITE_OLLAMA_HOST=http://ollama:11434/v1
     depends_on:

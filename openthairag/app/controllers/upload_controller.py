@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 from werkzeug.utils import secure_filename
 from db import Connection
 from datetime import datetime
@@ -29,20 +29,25 @@ def upload_file():
         return jsonify({"error": "No selected file"}), 400
 
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        original_filename = file.filename  # keep Thai name
+        stored_filename = secure_filename(original_filename)
 
-        # Save file to disk
+        # Fallback: if secure_filename strips everything (like only ".pdf")
+        if stored_filename == "" or stored_filename == original_filename.split(".")[-1]:
+            ext = os.path.splitext(original_filename)[1]
+            stored_filename = f"file_{datetime.utcnow().timestamp()}{ext}"
+
+        filepath = os.path.join(UPLOAD_FOLDER, stored_filename)
         file.save(filepath)
 
         try:
-            load_docs()  
+            load_docs()
         except Exception as e:
             return jsonify({"error": f"Failed to load document: {str(e)}"}), 500
-        
 
-        result = mongo.docs.insert_one({
-            "filename": filename,
+        result = mongo.doc_files.insert_one({
+            "original_filename": original_filename,   # Thai visible name
+            "stored_filename": stored_filename,       # disk-safe name
             "path": filepath,
             "uploaded_at": datetime.utcnow()
         })
@@ -50,16 +55,17 @@ def upload_file():
         return jsonify({
             "message": "File uploaded successfully",
             "id": str(result.inserted_id),
-            "filename": filename,
+            "filename": original_filename,   # return Thai name to frontend
             "path": filepath
         }), 201
 
     return jsonify({"error": "File type not allowed"}), 400
 
+
 def delete_file(file_id):
     """Delete file by Mongo _id and remove from disk"""
     try:
-        doc = mongo.docs.find_one({"_id": ObjectId(file_id)})
+        doc = mongo.doc_files.find_one({"_id": ObjectId(file_id)})
         if not doc:
             return jsonify({"error": "File not found"}), 404
 
@@ -69,7 +75,7 @@ def delete_file(file_id):
             os.remove(filepath)
 
         # Remove record from Mongo
-        mongo.docs.delete_one({"_id": ObjectId(file_id)})
+        mongo.doc_files.delete_one({"_id": ObjectId(file_id)})
 
         return jsonify({
             "message": "File deleted successfully",
@@ -80,11 +86,11 @@ def delete_file(file_id):
     
 
 def list_files():
-    data = mongo.docs.find()
+    data = mongo.doc_files.find()
     resp = [
         {
             "id": str(item.get("_id")),
-            "filename": item.get("filename", "Unknown"),
+            "filename": item.get("original_filename") or item.get("stored_filename") or "Unknown",
             "path": item.get("path", ""),
             "uploaded_at": item.get("uploaded_at").isoformat() if item.get("uploaded_at") else None
         }
@@ -95,15 +101,18 @@ def list_files():
 
 def get_file(file_id):
     try:
-        file = mongo.docs.find_one({"_id": ObjectId(file_id)})
+        file = mongo.doc_files.find_one({"_id": ObjectId(file_id)})
         if not file:
             return jsonify({"error": "File not found"}), 404
 
-        return jsonify({
-            "id": str(file["_id"]),
-            "filename": file.get("filename", ""),
-            "path": file.get("path", ""),
-            "uploaded_at": file.get("uploaded_at").isoformat() if file.get("uploaded_at") else None
-        }), 200
+        filepath = file.get("path")
+        if filepath and os.path.exists(filepath):
+            return send_file(
+                filepath,
+                as_attachment=True,
+                download_name=file.get("original_filename")
+            )
+        else:
+            return jsonify({"error": "File missing on disk"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500

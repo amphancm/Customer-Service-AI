@@ -103,6 +103,14 @@ async function logout() {
               Documents
             </h4>
             </RouterLink>
+            <RouterLink to="/upload-documents" v-slot="{ isActive }">
+              <h4
+              class="flex items-center text-base px-4 py-2 rounded-xl transition duration-200 hover:bg-customSildboxred hover:text-black mb-4"
+              :class="{ 'bg-customSildboxred text-black': isActive }">
+             <img src="@/assets/icons/task-checklist.png" class="mr-3" width="20" height="20" alt="Documents" />
+              Upload documents Files
+            </h4>
+            </RouterLink>
 
             <!-- System Prompt -->
             <RouterLink to="/system_prompt" v-slot="{ isActive }">
