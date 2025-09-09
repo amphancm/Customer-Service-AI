@@ -160,6 +160,18 @@ def room_option_by_id_get(id):
     return dumps(result[0]), 200
 
 
+# def system_history_post(data):
+
+#     otg = compute_model(
+#         data['message'],
+#         "",
+#         data.get('systemPrompt', ''),
+#         data.get('temperature', 0.5)
+#     )
+    
+    
+
+#     return {"message": str(otg)}, 200
 def system_history_post(data):
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 

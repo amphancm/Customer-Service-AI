@@ -97,14 +97,6 @@ def uploaded_file(filename):
 
 
 
-@app.route('/nani', methods=['GET'])
-def nani():
-    """
-    A simple GET API endpoint that returns a "Hello, World!" message in JSON format.
-    """
-    return jsonify({'message': 'mongkol namawrongss'})
-
-
 ALLOWED_EXTENSIONS = {'txt', 'docx'}
 
 # def allowed_file(filename):

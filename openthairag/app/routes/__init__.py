@@ -6,6 +6,7 @@ from .setting_routes import setting_bp
 from .user_routes import account_bp
 from .product_routes import product_bp
 from .issue_routes import issue_bp
+from .upload_router import upload_bp
 
 def register_routes(app):
     app.register_blueprint(auth_bp, name='auth', url_prefix="/auth")
@@ -16,3 +17,4 @@ def register_routes(app):
     app.register_blueprint(account_bp, url_prefix="/user")
     app.register_blueprint(product_bp, url_prefix="/product")
     app.register_blueprint(issue_bp, url_prefix="/issue")
+    app.register_blueprint(upload_bp, url_prefix="/upload")

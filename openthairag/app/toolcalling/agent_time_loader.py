@@ -1,1 +1,1 @@
-from agent_time.index import time_context
+from .agent_time.index import get_time_context

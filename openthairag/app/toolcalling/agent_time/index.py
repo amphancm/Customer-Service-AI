@@ -3,6 +3,8 @@ from crewai import LLM, Task, Agent, Crew
 from crewai.tools import BaseTool
 from datetime import datetime
 import pytz
+from dotenv import load_dotenv
+load_dotenv()
 
 class TimeTool(BaseTool):
   name: str = "time_tool"
@@ -22,7 +24,7 @@ llm = LLM(model="together_ai/Qwen/Qwen2.5-72B-Instruct-Turbo",
           base_url="https://api.together.xyz/v1"
         )
 
-test_agent = Agent(
+time_agent = Agent(
     llm = llm,
     role="Thai Research Analyst",
     goal="Find and summarize information about specific topics",
@@ -34,15 +36,18 @@ test_agent = Agent(
 task = Task(
     description="วันนี้วันที่เท่าไหร่ และตอนนี้เวลาประมาณที่ไทยประมาณกี่โมง",
     expected_output="Answer the general answers in Thai language.",
-    agent=test_agent
+    agent=time_agent
 )
 
 
 crew = Crew(
-    agents=[test_agent],
+    agents=[time_agent],
     tasks=[task],
     verbose=True
 )
 
 result = crew.kickoff()
 time_context = task.output
+
+def get_time_context():
+    return time_context

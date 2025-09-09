@@ -17,6 +17,11 @@ import json
 from toolcalling.tool_function import *
 from db import Connection
 
+from together import Together
+from toolcalling import rag_docs_query, get_time_context, rag_sql_query
+from dotenv import load_dotenv
+load_dotenv()
+
 mongo=Connection('otg_db')
 
 MILVUS_HOST = os.environ.get('MILVUS_HOST', 'milvus')
@@ -139,29 +144,66 @@ def rerank_documents(query_embedding, document_embeddings):
     ranked_documents = sorted(enumerate(similarities.flatten()), key=lambda x: x[1], reverse=True)
     return ranked_documents
 
-SYSTEM_PROMPT = "คุณคือ OpenThaiGPT พัฒนาโดยสมาคมผู้ประกอบการปัญญาประดิษฐ์ประเทศไทย (AIEAT)"
+SYSTEM_PROMPT = """
+You are a **Customer Service AI assistant**.  
+Your role is to answer questions politely and accurately, using only the provided context.  
+You are an expert in customer service and must never invent information.  
+
+## Context Sources
+There are 5 possible context types:
+1. **Time context** → Current date and time in Thailand timezone.  
+2. **Document context** → Extracted from user documents.  
+3. **CSV/PDF/TXT context** → Extracted from structured/unstructured files.  
+4. **Database context** → Extracted from SQL databases.  
+5. **Empty context** → When no relevant data is provided.  
+
+The context will be passed inside XML tags:  
+
+- `<time_context>...</time_context>`  
+- `<document_context>...</document_context>`  
+- `<csv_pdf_txt_context>...</csv_pdf_txt_context>`  
+- `<database_context>...</database_context>`  
+
+If no context is provided, the tags will contain `"Empty"`.  
+
+### Rules for Answering
+- **Always answer in the same language as the user’s question.**  
+- **Only use the provided context.** Do not make up answers.  
+- If the context is missing or irrelevant, reply with:  
+  - `"I don't know"` (English)  
+  - `"ไม่ทราบค่ะ/ครับ"` (Thai)  
+
+### Example
+```xml
+<time_context>Empty</time_context>
+<document_context>Empty</document_context>
+<database_context>Empty</database_context>
+<csv_pdf_txt_context>Empty</csv_pdf_txt_context>
+
+## Extra Prompt Handling
+The user may provide **extra instructions** after the main system prompt.  
+If an extra prompt is given, you must **follow it strictly in addition to the main rules above**.  
+When conflicts occur, prioritize the **main system rules** first, then apply extra instructions if they don’t break the rules.
+
+the extra prompt will be tag in xml like this 
+```xml
+<extra_prompt>...</extra_prompt>
+
+```
+
+Remember this:
+- Answer the question directly and concisely, without repeating the context or instructions.
+"""
 
 def compute_model(query, arr_history, system_prompt, temperature):
     prompt = [
-        {'role':'system', 'content': SYSTEM_PROMPT}
-        {'role':'system', 'content': f"""
-        This is extra prompt, please following the instruction after main system prompt
-        - {system_prompt}         
+        {'role':'system', 'content': SYSTEM_PROMPT},
+        {'role':'user', 'content': f"""
+<extra_prompt>{system_prompt if system_prompt else "Empty"}</extra_prompt>       
          """.strip()
          }
     ]
     
-    setting_info = get_model_env()
-    LLM_API_DOMAIN = setting_info.get('domainname')
-    LLM_API_KEY    = setting_info.get('apikey')
-    LLM_MODEL_NAME = setting_info.get('modelname')
-    # ollamaserver = os.environ.get('OLLAMA_HOST')
-    
-    print(LLM_API_DOMAIN)
-    print(LLM_API_KEY)
-    print(LLM_MODEL_NAME)
-    # print(ollamaserver)
-
     try: 
         logger.info(f"Getting context from Milvus for query: {query}")
         assistant_message = None  # Initialize to avoid UnboundLocalError
@@ -206,22 +248,109 @@ def compute_model(query, arr_history, system_prompt, temperature):
         ranked_indices = rerank_documents(query_embedding, document_embeddings)
         top_documents = [retrieved_documents[i] for i, _ in ranked_indices[:3]]
         prompt = prompt.append({'role':'user', 'content': f"""
-Use the following context to answer the question.
-Context: {top_documents[0].get('text') if len(top_documents) > 0 else ""}
+<document_context>{' '.join([doc.get('text') for doc in top_documents]) if top_documents else "Empty"}</document_context>
         """}.strip())
         logger.info(f"Top documents retrieved: {[doc.get('text') for doc in top_documents]}")
         if len(top_documents) == 0:
             return {"content": "No relevant documents found in the database."}
     except Exception as e:
         logger.error(f"Error during Milvus retrieval: {e}")
-        return {"content": "Error during Milvus retrieval: " + str(e)}
+        prompt.append({
+            'role':'user', 
+            'content': f"<document_context>Empty</document_context>"
+        })
+        
+    # get context from time 
+    try:
+        logger.info("Getting time context")
+        time_context = get_time_context()
+        prompt.append({
+            'role':'user', 
+            'content': f"""
+<time_context>{time_context if time_context else "Empty"}</time_context>
+""".strip()})
+        logger.info(f"Time context: {time_context}")
+    except Exception as e:
+        logger.error(f"Error getting time context: {e}")
+        prompt.append({
+            'role':'user', 
+            'content': f"<time_context>Empty</time_context>"
+        })
+
+    # get context from rag document
+    try:
+        logger.info("Getting RAG document context")
+        rag_doc_context = rag_docs_query(query, top_k=3)
+        prompt.append({
+            'role':'user', 
+            'content': f"""
+<csv_pdf_txt_context>{' '.join(rag_doc_context) if rag_doc_context else "Empty"}</csv_pdf_txt_context>
+""".strip()})
+        logger.info(f"RAG document context: {rag_doc_context}")
+    except Exception as e:
+        logger.error(f"Error getting RAG document context: {e}")
+        prompt.append({
+            'role':'user', 
+            'content': f"<csv_pdf_txt_context>Empty</csv_pdf_txt_context>"
+        })
+
+    # get context from rag sql database
+    try:
+        logger.info("Getting RAG SQL database context")
+        rag_sql_context = rag_sql_query(query)
+        prompt.append({
+            'role':'user', 
+            'content': f"""
+<database_context>{rag_sql_context if rag_sql_context else "Empty"}</database_context>
+""".strip()})
+        logger.info(f"RAG SQL database context: {rag_sql_context}")
+    except Exception as e:
+        logger.error(f"Error getting RAG SQL database context: {e}")
+        prompt.append({
+            'role':'user', 
+            'content': f"<database_context>Empty</database_context>"
+        })    
+    setting_info = get_model_env()
+
+    temp = setting_info.get("temperature", 0.7)
+    try:
+        temp = float(temp)
+    except (ValueError, TypeError):
+        temp = 0.7
+    if setting_info.get("isServer"):
+        try:
+            logger.info("Sending request to Together API")
+            client = Together(api_key=os.getenv("TOGETHER_API_KEY"))
+            response = client.chat.completions.create(
+                model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
+                messages=prompt,
+                temperature=temp,
+                max_tokens=2048,
+                stream=False
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            logger.error(f"Error during Together API call: {e}")
+            return {"content": "Together API error: " + str(e)}
+    elif setting_info.get("isLocal"):
+        try:
+            logger.info("Sending request Local LLM")
+            client = Together(api_key=os.getenv("TOGETHER_API_KEY"))
+            response = client.chat.completions.create(
+                model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
+                messages=prompt,
+                temperature=temp,
+                max_tokens=2048,
+                stream=False
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            logger.error(f"Error during Together API call: {e}")
+            return {"content": "Together API error: " + str(e)}
+    else:
+        logger.error("No valid model configuration found.")
+        return {"content": "No valid model configuration found."}
     
-    client = OpenAI(
-        base_url=f"{LLM_API_DOMAIN}",
-        api_key=LLM_API_KEY,
-    )
-
-
 
 def get_function_by_name(name):
     print(f"Getting function by name: {name}")

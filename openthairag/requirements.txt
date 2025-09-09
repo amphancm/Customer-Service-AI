@@ -36,3 +36,5 @@ PyPDF2
 crewai 
 gspread 
 oauth2client
+mysql-connector-python
+together

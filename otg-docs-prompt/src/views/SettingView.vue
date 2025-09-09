@@ -329,12 +329,9 @@
 </template>
 
 
-
 <script lang="ts" setup>
 import { useSettingStore } from '@/stores/setting'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
-
-
+import { computed, nextTick, onMounted, ref } from 'vue'
 
 const settingStore = useSettingStore()
 
@@ -346,10 +343,8 @@ const showApiKey = ref(false)
 const apiModelOptions = computed(() => {
   if (selectedApiDomain.value === 'https://api.together.xyz/v1') {
     return [
-      'DeepSeek V3-0324',
-      'Qwen3 235B',
-      'A22B FP8 Throughput',
-      'Typhoon 2.1 12B'
+      'Qwen/Qwen2.5-72B-Instruct-Turbo',
+      'ngamthip98/lora-datasetv02-Llama-3.1-8B-customer-service-chatbot'
     ]
   } else if (selectedApiDomain.value === 'https://openrouter.ai/api/v1') {
     return [
@@ -358,71 +353,51 @@ const apiModelOptions = computed(() => {
       'mistralai/mistral-7b-instruct-v0.3'
     ]
   } else if (selectedApiDomain.value === 'mock_ollama') {
-    return [
-      'tinyllama:latest',
-      'gemma2:2b'
-    ]
+    return ['tinyllama:latest', 'gemma2:2b']
   } else if (selectedApiDomain.value === 'mock_vllm') {
-    return [
-      'tinyllama:latest',
-      'gemma2:2b'
-    ]
+    return ['tinyllama:latest', 'gemma2:2b']
   }
   return ['Select Model Name']
 })
+
 const apiDomains = ref([
   { label: 'Select Domain Name', value: '' },
   { label: 'TogetherAI', value: 'https://api.together.xyz/v1' },
   { label: 'OpenRouter', value: 'https://openrouter.ai/api/v1' }
 ])
-// // const apiLocal = ref([
-// //   { label: 'Ollama', value: 'mock_ollama' },
-// //   { label: 'vllm',  value: 'mock_vllm' },
-//   // { label: 'OpenRouter', value: 'https://openrouter.ai/api/v1' }
-// ])
 
 const localModelOptions = ref([
   'Select Model Name',
   'tinyllama:latest',
   'gemma2:2b'
 ])
-// const localDomains = ref(['http://localhost:11434/v1'])
 
-// const localDomains = ref([
-//   import.meta.env.VITE_OLLAMA_HOST ? `${import.meta.env.VITE_OLLAMA_HOST}/v1` : ''
-// ])
-
-// Bind directly to store for two-way sync
 const apiModel = computed({
-
   get: () => settingStore.Settings.server?.modelname || apiModelOptions.value[0],
   set: val => {
-    if (!settingStore.Settings.server) settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.server) {
+      settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.server.modelname = val
   }
 })
+
 const selectedApiDomain = computed({
-
   get: () => settingStore.Settings.server?.domainname || (apiDomains.value.length > 0 ? apiDomains.value[0].value : ''),
-
   set: val => {
-    if (!settingStore.Settings.server) settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.server) {
+      settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.server.domainname = val
   }
 })
 
-// const selectedLocalDomain = computed({
-//   get: () => settingStore.Settings.server?.domainname || apiDomains.value[0],
-//   set: val => {
-//     if (!settingStore.Settings.server) settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
-//     settingStore.Settings.server.domainname = val
-//   }
-// })
-
 const apiKey = computed({
   get: () => settingStore.Settings.server?.apikey || '',
   set: val => {
-    if (!settingStore.Settings.server) settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.server) {
+      settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.server.apikey = val
   }
 })
@@ -430,14 +405,19 @@ const apiKey = computed({
 const localModel = computed({
   get: () => settingStore.Settings.local?.modelname || 'Select Model Name',
   set: val => {
-    if (!settingStore.Settings.local) settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.local) {
+      settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.local.modelname = val
   }
 })
+
 const selectedLocalDomain = computed({
-  get: () => settingStore.Settings.local?.domainname || localDomains.value[0],
+  get: () => settingStore.Settings.local?.domainname || '',
   set: val => {
-    if (!settingStore.Settings.local) settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.local) {
+      settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.local.domainname = val
   }
 })
@@ -445,23 +425,23 @@ const selectedLocalDomain = computed({
 // Activation toggles
 const isLineTokenEnabled = computed({
   get: () => !!settingStore.Settings.line_activate,
-  set: v => settingStore.Settings.line_activate = v
+  set: v => (settingStore.Settings.line_activate = v)
 })
 const isFacebookTokenEnabled = computed({
   get: () => !!settingStore.Settings.fb_activate,
-  set: v => settingStore.Settings.fb_activate = v
+  set: v => (settingStore.Settings.fb_activate = v)
 })
 const isProductTokenEnabled = computed({
   get: () => !!settingStore.Settings.product_activate,
-  set: v => settingStore.Settings.product_activate = v
+  set: v => (settingStore.Settings.product_activate = v)
 })
 const isOrderTokenEnabled = computed({
   get: () => !!settingStore.Settings.feedback_activate,
-  set: v => settingStore.Settings.feedback_activate = v
+  set: v => (settingStore.Settings.feedback_activate = v)
 })
 const isGreetingEnabled = computed({
   get: () => !!settingStore.Settings.greeting_activate,
-  set: v => settingStore.Settings.greeting_activate = v
+  set: v => (settingStore.Settings.greeting_activate = v)
 })
 
 const isLoading = ref(false)
@@ -471,37 +451,43 @@ const showLineSecret = ref(false)
 
 onMounted(async () => {
   await settingStore.fetchSettings()
-  // Set tab based on which is enabled
   if (settingStore.Settings.server?.enabled) currentTab.value = 'api'
   else if (settingStore.Settings.local?.enabled) currentTab.value = 'local'
 })
 
-function openModal() { isSuccess.value = true }
-function closeModal() { isSuccess.value = false }
+function openModal() {
+  isSuccess.value = true
+}
+function closeModal() {
+  isSuccess.value = false
+}
 
 async function generateFacebookPassword() {
   settingStore.Settings.facebook_verify_password = Math.random().toString(36).slice(-8)
   await nextTick()
 }
 
-
-
 async function handleSave() {
-
-  // Set enabled flags for server/local
   if (currentTab.value === 'api') {
-    if (!settingStore.Settings.server) settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.server) {
+      settingStore.Settings.server = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.server.enabled = true
+    // ✅ บังคับอัปเดตค่า modelname ก่อน save
+    settingStore.Settings.server.modelname = apiModel.value
+
     settingStore.Settings.local = { enabled: false, domainname: '', apikey: '', modelname: '' }
   } else {
-    if (!settingStore.Settings.local) settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    if (!settingStore.Settings.local) {
+      settingStore.Settings.local = { enabled: true, domainname: '', apikey: '', modelname: '' }
+    }
     settingStore.Settings.local.enabled = true
-    // Always set domain and dummy key for local
-    const ollamaHost = import.meta.env.VITE_OLLAMA_HOST;
-    //console.log(`${import.meta.env.VITE_OLLAMA_HOST}/v1` )
-    // console.log(ollamaHost)
+    const ollamaHost = import.meta.env.VITE_OLLAMA_HOST
     settingStore.Settings.local.domainname = ollamaHost
     settingStore.Settings.local.apikey = 'ollama'
+    // ✅ บังคับอัปเดตค่า modelname local
+    settingStore.Settings.local.modelname = localModel.value
+
     settingStore.Settings.server = { enabled: false, domainname: '', apikey: '', modelname: '' }
   }
 
@@ -538,10 +524,9 @@ async function handleSave() {
     isLoading.value = false
   }
 }
-
-console.log('localModel ',localModel.value)
-
 </script>
+
+
 
 <style>
 /* Add to your <style> section or global CSS */
