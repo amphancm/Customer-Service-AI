@@ -80,6 +80,10 @@ export const useSystemPromptStore = defineStore('systemPromptStore', {
           router.push({ path: "/login" }).catch((err) => console.error(err));
           return;
         }
+        this.systemPrompts = {
+          ...this.systemPrompts,
+          ...newSystemPrompt,
+        }
       } catch (error) {
         console.error('Failed to create systemPrompt:', error)
       }
