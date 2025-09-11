@@ -26,15 +26,6 @@ mongo=Connection('otg_db')
 
 MILVUS_HOST = os.environ.get('MILVUS_HOST', 'milvus')
 MILVUS_PORT = os.environ.get('MILVUS_PORT', '19530')
-# VLLM_HOST   = os.environ.get('VLLM_HOST', '172.17.0.1:8000')
-# SYSTEM_PROMPT = os.environ.get('SYSTEM_PROMPT', 'คุณคือ OpenThaiGPT พัฒนาโดยสมาคมผู้ประกอบการปัญญาประดิษฐ์ประเทศไทย (AIEAT)')
-
-
-# LLM_API_DOMAIN = os.environ.get('LLM_API_DOMAIN')
-# LLM_API_KEY    = os.environ.get('LLM_API_KEY')
-# LLM_MODEL_NAME = os.environ.get('LLM_MODEL_NAME')
-
-# connections.connect("default", host=MILVUS_HOST, port=MILVUS_PORT)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG) 
@@ -63,16 +54,6 @@ def get_model_env():
 
 
 
-# Example usage:
-# env = get_model_env()
-# print(env["domainname"], env["apikey"], env["modelname"])
-
-# print(f"LLM_API_DOMAIN: {LLM_API_DOMAIN}")
-# print(f"LLM_API_KEY: {LLM_API_KEY}")
-# print(f"LLM_MODEL_NAME: {LLM_MODEL_NAME}")
-
-
-# Function to initialize Milvus collection
 def initialize_milvus_collection():
     # Check if collection exists
     if not utility.has_collection("document_embeddings"):
@@ -247,9 +228,9 @@ def compute_model(query, arr_history, system_prompt, temperature):
 
         ranked_indices = rerank_documents(query_embedding, document_embeddings)
         top_documents = [retrieved_documents[i] for i, _ in ranked_indices[:3]]
-        prompt = prompt.append({'role':'user', 'content': f"""
+        prompt.append({'role':'user', 'content': f"""
 <document_context>{' '.join([doc.get('text') for doc in top_documents]) if top_documents else "Empty"}</document_context>
-        """}.strip())
+""".strip()})
         logger.info(f"Top documents retrieved: {[doc.get('text') for doc in top_documents]}")
         if len(top_documents) == 0:
             return {"content": "No relevant documents found in the database."}
@@ -280,11 +261,12 @@ def compute_model(query, arr_history, system_prompt, temperature):
     # get context from rag document
     try:
         logger.info("Getting RAG document context")
-        rag_doc_context = rag_docs_query(query, top_k=3)
+        rag_doc_context = rag_docs_query(query, top_k=10)
+        print("RAG document context:", rag_doc_context)
         prompt.append({
             'role':'user', 
             'content': f"""
-<csv_pdf_txt_context>{' '.join(rag_doc_context) if rag_doc_context else "Empty"}</csv_pdf_txt_context>
+<csv_pdf_txt_context>{rag_doc_context}</csv_pdf_txt_context>
 """.strip()})
         logger.info(f"RAG document context: {rag_doc_context}")
     except Exception as e:
@@ -294,6 +276,7 @@ def compute_model(query, arr_history, system_prompt, temperature):
             'content': f"<csv_pdf_txt_context>Empty</csv_pdf_txt_context>"
         })
 
+    print("Prompt after adding RAG document context:", prompt)
     # get context from rag sql database
     try:
         logger.info("Getting RAG SQL database context")
@@ -313,6 +296,7 @@ def compute_model(query, arr_history, system_prompt, temperature):
     setting_info = get_model_env()
 
     temp = setting_info.get("temperature", 0.7)
+    print(f"Temperature setting: {temp}")
     try:
         temp = float(temp)
     except (ValueError, TypeError):

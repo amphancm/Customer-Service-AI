@@ -173,31 +173,38 @@ def room_option_by_id_get(id):
 
 #     return {"message": str(otg)}, 200
 def system_history_post(data):
+    # 1. Get chat history document
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
-    mongo.chatHistory.update_one({
-        '_id': ObjectId(data['id'])
-    },
-    {
-        '$push': {
-            "messages": {
-                '$each': [{
-                    'role': 'user',
-                    'content': data['message'],
-                }]
+    # 2. Insert new user message
+    mongo.chatHistory.update_one(
+        {'_id': ObjectId(data['id'])},
+        {
+            '$push': {
+                "messages": {
+                    '$each': [{
+                        'role': 'user',
+                        'content': data['message'],
+                    }]
+                }
             }
         }
-    })
+    )
 
+    # 3. Reload chat history
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
+    sp = mongo.systemPrompt.find_one({}, {"_id": 0, "content": 1})
+    system_prompt = sp.get("content", "") if sp else ""
+
+    # 5. Call compute_model for assistant reply
     otg = compute_model(
         data['message'],
         result['messages'],
-        data.get('systemPrompt', ''),
+        system_prompt,
         data.get('temperature', 0.5)
     )
-    
+
     if isinstance(otg, str):
         assistant_content = otg
     elif hasattr(otg, 'content'):
@@ -210,31 +217,34 @@ def system_history_post(data):
         'content': assistant_content,
     }
 
-    mongo.chatHistory.update_one({
-        '_id': ObjectId(data['id'])
-    },
-    {
-        '$push': {
-            "messages": {
-                '$each': [message]
+    mongo.chatHistory.update_one(
+        {'_id': ObjectId(data['id'])},
+        {
+            '$push': {
+                "messages": {
+                    '$each': [message]
+                }
             }
         }
-    })
+    )
 
+    # 6. Reload after assistant message
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
-    title_name = result['chatOption']['name']  # ค่าตั้งต้น
+    # 7. Default title name
+    title_name = result['chatOption'].get('name', 'New Chat')
+
+    # 8. If this is a new chat, auto-generate a title
     if len(result['messages']) < 3:
         try:
             print('กำลังตั้งชื่อบทสนทนา...')
             res = compute_model(
                 'ช่วยตั้งชื่อบทสนทนาให้หน่อย ขอแค่ชื่อเท่านั้น',
                 result['messages'],
-                data.get('systemPrompt', ''),
+                system_prompt,
                 data.get('temperature', 0.5)
             )
-            
-            # Handle both string and object responses for title generation
+
             if isinstance(res, str):
                 title_name = res.replace('"', '')
             elif hasattr(res, 'content'):
@@ -242,18 +252,18 @@ def system_history_post(data):
             else:
                 title_name = str(res).replace('"', '')
 
-            mongo.chatHistory.update_one({
-                '_id': ObjectId(data['id'])
-            },
-            {
-                '$set': {
-                    'chatOption': {
-                        "name": title_name,
-                        "temperature": result['chatOption'].get('temperature', 0.5),
-                        "systemPrompt": result['chatOption'].get('systemPrompt', '')
+            mongo.chatHistory.update_one(
+                {'_id': ObjectId(data['id'])},
+                {
+                    '$set': {
+                        'chatOption': {
+                            "name": title_name,
+                            "temperature": result['chatOption'].get('temperature', 0.5),
+                            "systemPrompt": system_prompt
+                        }
                     }
                 }
-            })
+            )
         except Exception as e:
             print(f"Error generating title: {e}")
             return {
@@ -265,6 +275,7 @@ def system_history_post(data):
         "title_name": title_name,
         "message": message
     }, 200
+
 
 
 def system_history_get(data):

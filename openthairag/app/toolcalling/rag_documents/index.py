@@ -158,19 +158,8 @@ class QdrantRAG:
     def add_data(
         self,
         data: Union[str, List[str], Path, List[Path]],
-        column_name: str = "context",
         reload: bool = True,
     ) -> None:
-        """
-        Add new data to the Qdrant collection from strings, files, or a folder.
-
-        Args:
-            data (Union[str, List[str], Path, List[Path]]): String, list of strings, file path, list of file paths, or folder path.
-            column_name (str): Column name to use for CSV files.
-            reload (bool):
-                - True  → Always re-read and (re)insert content (will create new vectors again).
-                - False → Skip items already recorded in the manifest to avoid duplicate ingestion.
-        """
         try:
             if not self.index:
                 raise ValueError("Index not initialized. Call constructor first.")
@@ -248,20 +237,25 @@ class QdrantRAG:
 
                     elif suffix == ".csv":
                         df = pd.read_csv(file_path)
-                        if column_name not in df.columns:
-                            print(f"Warning: CSV {file_path} missing '{column_name}' column, skipping")
-                            continue
+
                         for idx, row in df.iterrows():
-                            value = str(row[column_name]) if pd.notna(row[column_name]) else ""
-                            value = value.strip()
-                            if not value:
+                            # join all non-NaN column values into one string
+                            values = [str(v).strip() for v in row.values if pd.notna(v) and str(v).strip()]
+                            if not values:
                                 continue
-                            row_key = f"csv://{str(file_path.resolve())}|{idx}|{self._hash_text(value)}"
+                            text = " | ".join(values)   # or use "," / "\t" depending on your style
+
+                            row_key = f"csv://{str(file_path.resolve())}|{idx}|{self._hash_text(text)}"
                             _maybe_queue_doc(
                                 row_key,
-                                lambda v=value: Document(text=v),
-                                {"type": "file_csv_row", "source": str(file_path), "row_index": int(idx)},
+                                lambda v=text: Document(text=v),
+                                {
+                                    "type": "file_csv_row",
+                                    "source": str(file_path),
+                                    "row_index": int(idx)
+                                },
                             )
+
                     else:
                         print(f"Warning: Unsupported file type {suffix} for {file_path}, skipping")
 

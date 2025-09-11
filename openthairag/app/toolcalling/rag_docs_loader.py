@@ -7,7 +7,7 @@ doc_dir = Path(DOC_DIR)
 
 
 def load_docs():
-    rag.add_data(DOC_DIR, column_name="context", reload=True)
+    rag.add_data(DOC_DIR, reload=True)
 
 def rag_docs_query(question, top_k=3):
     """
@@ -24,5 +24,5 @@ def rag_docs_query(question, top_k=3):
         >>> rag_docs_query("ยาที่ใช้แก้ปวด", top_k=5)
         ["ยา A ...", "ยา B ...", ...]
     """
-    rag.add_data(DOC_DIR, column_name="context", reload=False)
+    rag.add_data(DOC_DIR, reload=False)
     return rag.query(question, top_k=10)
