@@ -1,29 +1,29 @@
 version: '3.9'
 
 services:
-  ollama:
-    container_name: ollamaserver
-    image: ollama/ollama:latest
-    pull_policy: always
-    tty: true
-    restart: unless-stopped
-    ports:
-      - "11434:11434"  
-    volumes:
-      - ollama:/root/.ollama
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        apt-get update && apt-get install -y curl && \
-        ollama serve & \
-        until curl -s http://localhost:11434 > /dev/null; do \
-          echo "Waiting for Ollama server..."; sleep 1; \
-        done && \
-        echo "Ollama server is up. Pulling models..." && \
-        ollama pull tinyllama && \
-        ollama pull gemma2:2b && \
-        echo "Models pulled successfully. Tailing logs..." && \
-        tail -f /dev/null
+  # ollama:
+  #   container_name: ollamaserver
+  #   image: ollama/ollama:latest
+  #   pull_policy: always
+  #   tty: true
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11434:11434"  
+  #   volumes:
+  #     - ollama:/root/.ollama
+  #   entrypoint: ["/bin/sh", "-c"]
+  #   command:
+  #     - |
+  #       apt-get update && apt-get install -y curl && \
+  #       ollama serve & \
+  #       until curl -s http://localhost:11434 > /dev/null; do \
+  #         echo "Waiting for Ollama server..."; sleep 1; \
+  #       done && \
+  #       echo "Ollama server is up. Pulling models..." && \
+  #       ollama pull tinyllama && \
+  #       ollama pull gemma2:2b && \
+  #       echo "Models pulled successfully. Tailing logs..." && \
+  #       tail -f /dev/null
     
   
   flask:
@@ -136,7 +136,7 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init:/docker-entrypoint-initdb.d
 
 
 volumes:

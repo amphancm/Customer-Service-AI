@@ -16,7 +16,7 @@ from openai import OpenAI
 import json
 from toolcalling.tool_function import *
 from db import Connection
-
+from configs import get_config
 from together import Together
 from toolcalling import rag_docs_query, get_time_context, rag_sql_query
 from dotenv import load_dotenv
@@ -29,29 +29,6 @@ MILVUS_PORT = os.environ.get('MILVUS_PORT', '19530')
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG) 
-
-def get_model_env():
-    """
-    Fetch 'server' and 'local' configs from the settings collection.
-    Returns the enabled config's apikey, domainname, and modelname.
-    """
-    setting = mongo.setting.find_one({}, {"_id": 0, "server": 1, "local": 1})
-    if setting:
-        if setting.get("server", {}).get("enabled", False):
-            config = setting["server"]
-        elif setting.get("local", {}).get("enabled", False):
-            config = setting["local"]
-        else:
-            config = {}
-        return {
-            "isServer": config.get("enabled", False),
-            "isLocal": not config.get("enabled", False),
-            "apikey": config.get("apikey", ""),
-            "domainname": config.get("domainname", ""),
-            "modelname": config.get("modelname", "")
-        }
-    return {"apikey": "", "domainname": "", "modelname": ""}
-
 
 
 def initialize_milvus_collection():
@@ -139,7 +116,6 @@ There are 5 possible context types:
 5. **Empty context** → When no relevant data is provided.  
 
 The context will be passed inside XML tags:  
-
 - `<time_context>...</time_context>`  
 - `<document_context>...</document_context>`  
 - `<csv_pdf_txt_context>...</csv_pdf_txt_context>`  
@@ -149,38 +125,34 @@ If no context is provided, the tags will contain `"Empty"`.
 
 ### Rules for Answering
 - **Always answer in the same language as the user’s question.**  
-- **Only use the provided context.** Do not make up answers.  
+- **Use any context that is relevant to the query.**  
+- If a context contains raw formats such as Python tuples, lists, or SQL outputs (e.g. `[('Paracetamol 500mg',)]`), extract the meaningful values (e.g. `Paracetamol 500mg`) and include them in your answer.  
+- If multiple contexts are relevant, combine them in your answer.  
 - If the context is missing or irrelevant, reply with:  
   - `"I don't know"` (English)  
   - `"ไม่ทราบค่ะ/ครับ"` (Thai)  
 
 ### Example
-```xml
-<time_context>Empty</time_context>
-<document_context>Empty</document_context>
-<database_context>Empty</database_context>
+<time_context>วันนี้วันที่ 11 กันยายน 2025</time_context>
+<document_context>โปรโมชั่นร้านน้ำพริกบ้านสวน: 1000 บาท/คน</document_context>
 <csv_pdf_txt_context>Empty</csv_pdf_txt_context>
-
-## Extra Prompt Handling
-The user may provide **extra instructions** after the main system prompt.  
-If an extra prompt is given, you must **follow it strictly in addition to the main rules above**.  
-When conflicts occur, prioritize the **main system rules** first, then apply extra instructions if they don’t break the rules.
-
-the extra prompt will be tag in xml like this 
-```xml
-<extra_prompt>...</extra_prompt>
-
-```
-
-Remember this:
-- Answer the question directly and concisely, without repeating the context or instructions.
+<database_context>[('Paracetamol 500mg',)]</database_context>
 """
 
-def compute_model(query, arr_history, system_prompt, temperature):
+def compute_model(query, arr_history):
+    configs = get_config()
+    extra_prompt = configs.get("system_prompt", "")
+    isServer = configs.get("isServer", False)
+    isLocal = configs.get("isLocal", False)
+    temp = configs.get("temperature", 0.01)
+    apikey = configs.get("apikey", "")
+    domainname = configs.get("domainname", "")
+    modelname = configs.get("modelname", "")
+
     prompt = [
         {'role':'system', 'content': SYSTEM_PROMPT},
         {'role':'user', 'content': f"""
-<extra_prompt>{system_prompt if system_prompt else "Empty"}</extra_prompt>       
+<extra_prompt>{extra_prompt if extra_prompt else "Empty"}</extra_prompt>       
          """.strip()
          }
     ]
@@ -276,7 +248,6 @@ def compute_model(query, arr_history, system_prompt, temperature):
             'content': f"<csv_pdf_txt_context>Empty</csv_pdf_txt_context>"
         })
 
-    print("Prompt after adding RAG document context:", prompt)
     # get context from rag sql database
     try:
         logger.info("Getting RAG SQL database context")
@@ -293,20 +264,14 @@ def compute_model(query, arr_history, system_prompt, temperature):
             'role':'user', 
             'content': f"<database_context>Empty</database_context>"
         })    
-    setting_info = get_model_env()
-
-    temp = setting_info.get("temperature", 0.7)
-    print(f"Temperature setting: {temp}")
-    try:
-        temp = float(temp)
-    except (ValueError, TypeError):
-        temp = 0.7
-    if setting_info.get("isServer"):
+    
+    print("Prompt ", prompt)
+    if isServer:
         try:
             logger.info("Sending request to Together API")
-            client = Together(api_key=setting_info.get("apikey", ""))
+            client = Together(api_key=apikey)
             response = client.chat.completions.create(
-                model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
+                model=modelname if modelname else "Qwen/Qwen2.5-72B-Instruct-Turbo",
                 messages=prompt,
                 temperature=temp,
                 max_tokens=2048,
@@ -316,12 +281,12 @@ def compute_model(query, arr_history, system_prompt, temperature):
         except Exception as e:
             logger.error(f"Error during Together API call: {e}")
             return {"content": "Together API error: " + str(e)}
-    elif setting_info.get("isLocal"):
+    elif isLocal:
         try:
             logger.info("Sending request Local LLM")
-            client = Together(api_key=setting_info.get("apikey", ""))
+            client = Together(api_key=apikey)
             response = client.chat.completions.create(
-                model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
+                model=modelname if modelname else "Qwen/Qwen2.5-72B-Instruct-Turbo",
                 messages=prompt,
                 temperature=temp,
                 max_tokens=2048,
@@ -333,7 +298,7 @@ def compute_model(query, arr_history, system_prompt, temperature):
             return {"content": "Together API error: " + str(e)}
     else:
         logger.error("No valid model configuration found.")
-        return {"content": "No valid model configuration found."}
+    return {"content": "No valid model configuration found."}
     
 
 def get_function_by_name(name):

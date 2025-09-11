@@ -4,35 +4,10 @@ from crewai.tools import BaseTool
 from datetime import datetime
 import pytz
 from db import Connection
-from dotenv import load_dotenv
-load_dotenv()
+from configs import get_config
 
-mongo=Connection('otg_db')
+api_key = get_config().get("apikey", "")
 
-
-def get_model_env():
-    """
-    Fetch 'server' and 'local' configs from the settings collection.
-    Returns the enabled config's apikey, domainname, and modelname.
-    """
-    setting = mongo.setting.find_one({}, {"_id": 0, "server": 1, "local": 1})
-    if setting:
-        if setting.get("server", {}).get("enabled", False):
-            config = setting["server"]
-        elif setting.get("local", {}).get("enabled", False):
-            config = setting["local"]
-        else:
-            config = {}
-        return {
-            "isServer": config.get("enabled", False),
-            "isLocal": not config.get("enabled", False),
-            "apikey": config.get("apikey", ""),
-            "domainname": config.get("domainname", ""),
-            "modelname": config.get("modelname", "")
-        }
-    return {"apikey": "", "domainname": "", "modelname": ""}
-
-api_key = get_model_env().get("apikey", "")
 
 class TimeTool(BaseTool):
   name: str = "time_tool"
