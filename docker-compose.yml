@@ -1,29 +1,29 @@
 version: '3.9'
 
 services:
-  ollama:
-    container_name: ollamaserver
-    image: ollama/ollama:latest
-    pull_policy: always
-    tty: true
-    restart: unless-stopped
-    ports:
-      - "11434:11434"  
-    volumes:
-      - ollama:/root/.ollama
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        apt-get update && apt-get install -y curl && \
-        ollama serve & \
-        until curl -s http://localhost:11434 > /dev/null; do \
-          echo "Waiting for Ollama server..."; sleep 1; \
-        done && \
-        echo "Ollama server is up. Pulling models..." && \
-        ollama pull tinyllama && \
-        ollama pull gemma2:2b && \
-        echo "Models pulled successfully. Tailing logs..." && \
-        tail -f /dev/null
+  # ollama:
+  #   container_name: ollamaserver
+  #   image: ollama/ollama:latest
+  #   pull_policy: always
+  #   tty: true
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11434:11434"  
+  #   volumes:
+  #     - ollama:/root/.ollama
+  #   entrypoint: ["/bin/sh", "-c"]
+  #   command:
+  #     - |
+  #       apt-get update && apt-get install -y curl && \
+  #       ollama serve & \
+  #       until curl -s http://localhost:11434 > /dev/null; do \
+  #         echo "Waiting for Ollama server..."; sleep 1; \
+  #       done && \
+  #       echo "Ollama server is up. Pulling models..." && \
+  #       ollama pull tinyllama && \
+  #       ollama pull gemma2:2b && \
+  #       echo "Models pulled successfully. Tailing logs..." && \
+  #       tail -f /dev/null
     
   
   flask:
@@ -59,8 +59,8 @@ services:
       sh -c "npm install && npm run dev"
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - VITE_API_BASE_URL=http://localhost:5500
-      - VITE_OLLAMA_HOST=http://ollama:11434/v1
+      - VITE_API_BASE_URL=http://203.154.130.141:5500
+      - VITE_OLLAMA_HOST=http://203.154.130.141:11434/v1
     depends_on:
       milvus:
         condition: service_started
@@ -136,7 +136,7 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init:/docker-entrypoint-initdb.d
 
 
 volumes:

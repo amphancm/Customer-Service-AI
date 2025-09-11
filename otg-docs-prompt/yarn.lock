@@ -313,11 +313,6 @@
   resolved "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.21.5.tgz"
   integrity sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ==
 
-"@esbuild/win32-x64@0.21.5":
-  version "0.21.5"
-  resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz"
-  integrity sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==
-
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   version "4.4.1"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.1.tgz"
@@ -542,11 +537,6 @@
   resolved "https://registry.npmjs.org/@oxlint/linux-x64-musl/-/linux-x64-musl-0.11.1.tgz"
   integrity sha512-WekaLYk8WLT7Di8+nyPvtqs9OlMoO6KjFDMlqqLDWQTk9ffjn8e76PCRigF3w39jQ70qP3c8k8cNKNw5ROuFcg==
 
-"@oxlint/win32-x64@0.11.1":
-  version "0.11.1"
-  resolved "https://registry.npmjs.org/@oxlint/win32-x64/-/win32-x64-0.11.1.tgz"
-  integrity sha512-0hLl0z6adYTvLIOPC5uyo+EAwNITkzi4AY4xImykQW8H89GhiV9Xl8MPJeZQMWSz7ajI1I2+hRsvA0QAzeBsxA==
-
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
@@ -580,11 +570,6 @@
   version "4.27.4"
   resolved "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.27.4.tgz"
   integrity sha512-5AeeAF1PB9TUzD+3cROzFTnAJAcVUGLuR8ng0E0WXGkYhp6RD6L+6szYVX+64Rs0r72019KHZS1ka1q+zU/wUw==
-
-"@rollup/rollup-win32-x64-msvc@4.27.4":
-  version "4.27.4"
-  resolved "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.27.4.tgz"
-  integrity sha512-3j4jx1TppORdTAoBJRd+/wJRGCPC0ETWkXOecJ6PPZLj6SptXkrXcNqdj0oclbKML6FkQltdz7bBA3rUSirZug==
 
 "@sec-ant/readable-stream@^0.4.1":
   version "0.4.1"

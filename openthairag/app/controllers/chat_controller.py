@@ -6,66 +6,15 @@ import datetime
 import logging
 import requests
 from processing import compute_model
-
 from linebot.models import *
 from linebot import *
 import re
+from configs import get_config
 
 
 
 mongo=Connection('otg_db')
 logger = logging.getLogger(__name__)
-
-# def room_fb_option_get():
-#     data = list(mongo.fbMessage.find())
-#     return jsonify({
-#             "data": [ {**doc, "_id": str(doc["_id"])} for doc in data ]
-#         }), 200
-
-# def room_fb_option_patch(data):
-#     mongo.fbMessage.update_one({
-#         '_id': ObjectId(data['id'])
-#     },
-#     {
-#         "$set":{
-#             'chatOption': data['chatOption'],
-#         }
-#     })
-#     return jsonify({
-#         "message": "Data updated successfully"
-#     }), 201
-
-# =============================
-
-# def room_fb_option_by_id_get(id):
-#     result = mongo.fbMessage.find({'_id': ObjectId(id)})
-#     return dumps(result[0]), 200
-
-# def room_fb_option_by_id_patch(data, id):
-#     mongo.fbMessage.update_one({
-#             '_id':ObjectId(id)
-#         },
-#         {
-#             '$push': {
-#                 "messages": {
-#                     '$each': [{
-#                         'role': 'assistant',
-#                         'user': 0,
-#                         'content': data['message'],
-#                         'timestamp': datetime.datetime.now()
-#                     }]
-#                 }
-#             }
-#         })
-    
-# def room_fb_option_by_id_delete(id):
-#     mongo.fbMessage.delete_one({'_id': ObjectId(id)})
-
-#     return jsonify({
-#         "message": "Data Delete successfully",
-#     }), 201
-
-# =============================
 
 def room_line_option_patch(data):
     mongo.lineMessage.update_one({
@@ -160,19 +109,9 @@ def room_option_by_id_get(id):
     return dumps(result[0]), 200
 
 
-# def system_history_post(data):
-
-#     otg = compute_model(
-#         data['message'],
-#         "",
-#         data.get('systemPrompt', ''),
-#         data.get('temperature', 0.5)
-#     )
-    
-    
-
-#     return {"message": str(otg)}, 200
 def system_history_post(data):
+    config = get_config()
+    system_prompt = config.get("system_prompt", "")
     # 1. Get chat history document
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
@@ -194,15 +133,10 @@ def system_history_post(data):
     # 3. Reload chat history
     result = mongo.chatHistory.find_one({'_id': ObjectId(data['id'])})
 
-    sp = mongo.systemPrompt.find_one({}, {"_id": 0, "content": 1})
-    system_prompt = sp.get("content", "") if sp else ""
-
     # 5. Call compute_model for assistant reply
     otg = compute_model(
         data['message'],
         result['messages'],
-        system_prompt,
-        data.get('temperature', 0.5)
     )
 
     if isinstance(otg, str):

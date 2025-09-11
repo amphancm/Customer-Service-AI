@@ -58,6 +58,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 import axios from "axios"
+import { CONFIG } from '@/config'
 
 const files = ref<any[]>([])
 const isLoading = ref(false)
@@ -65,7 +66,7 @@ const isLoading = ref(false)
 async function fetchFiles() {
   isLoading.value = true
   try {
-    const { data } = await axios.get("http://localhost:5500/upload/documents", {
+    const { data } = await axios.get(`${CONFIG.API_BASE_URL}/upload/documents`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     files.value = data
@@ -86,7 +87,7 @@ async function handleUpload(event: Event) {
 
   isLoading.value = true
   try {
-    await axios.post("http://localhost:5500/upload/documents", formData, {
+    await axios.post(`${CONFIG.API_BASE_URL}/upload/documents`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -105,7 +106,7 @@ async function handleDelete(id: string) {
 
   isLoading.value = true
   try {
-    await axios.delete(`http://localhost:5500/upload/documents/${id}`, {
+    await axios.delete(`${CONFIG.API_BASE_URL}/upload/documents/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     await fetchFiles()
@@ -118,7 +119,7 @@ async function handleDelete(id: string) {
 
 async function handleDownload(id: string) {
   try {
-    const response = await axios.get(`http://localhost:5500/upload/documents/${id}`, {
+    const response = await axios.get(`${CONFIG.API_BASE_URL}/upload/documents/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       responseType: "blob"
     })

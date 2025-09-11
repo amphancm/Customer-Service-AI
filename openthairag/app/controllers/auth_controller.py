@@ -1,12 +1,15 @@
 from werkzeug.security import check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity, unset_jwt_cookies, get_jwt
+from flask_jwt_extended import (
+    create_access_token, jwt_required, JWTManager,
+    get_jwt_identity, unset_jwt_cookies, get_jwt
+)
 from datetime import timedelta
 from flask import jsonify
 from bson import ObjectId
 import logging
 from db import Connection
 
-mongo=Connection('otg_db')
+mongo = Connection('otg_db')
 
 blacklist = set()
 logger = logging.getLogger(__name__)
@@ -14,29 +17,41 @@ logger = logging.getLogger(__name__)
 def login(data):
     username = data.get("username")
     password = data.get("password")
-    remember = data.get("remember", False) 
+    remember = data.get("remember", False)
 
     print(f"user result: {username} {password} {remember}")
-    
+
     user = mongo.accounts.find_one({"username": username})
     if user and check_password_hash(user["password"], password):
-        expiration = timedelta(days=7) if remember else timedelta(days=1)  #token expiration time
+        expiration = timedelta(days=7) if remember else timedelta(days=1)
+
+        # ✅ Fix: use string id for identity (sub), extra info in additional_claims
         access_token = create_access_token(
-            identity={"id": str(user["_id"]), "username": username},
+            identity=str(user["_id"]),
+            additional_claims={
+                "username": username,
+                "role": user.get("role", "user")
+            },
             expires_delta=expiration
         )
-        return jsonify({"message": "Login successful", "access_token": access_token}), 200
+
+        return jsonify({
+            "message": "Login successful",
+            "access_token": access_token
+        }), 200
+
     return jsonify({"message": "Invalid username or password"}), 401
 
 def logout(jti):
-    blacklist.add(jti)  
+    blacklist.add(jti)
     resp = jsonify({'logout': True})
     unset_jwt_cookies(resp)
     response = jsonify({"message": "Logout successful"})
     return response, 200
 
 def profile(identity):
-    user_id = identity.get("id")
+    # ✅ identity is now just the user_id (string), not a dict
+    user_id = identity
     user = mongo.accounts.find_one({'_id': ObjectId(user_id)})
 
     logger.info(f"user result: {user}")
@@ -45,5 +60,5 @@ def profile(identity):
             "username": user["username"],
             "email": user.get("email")
         }), 200
-    
+
     return jsonify({"message": "User not found"}), 400

@@ -12,27 +12,31 @@ import mammoth , requests
 from io import BytesIO
 from db import Connection
 import uuid
-from flask_cors import CORS
 
-
-
-
-
-
-
-
+# ------------------------------------------------------
+# Logging setup
+# ------------------------------------------------------
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] %(message)s",
+)
 logger = logging.getLogger(__name__)
 
+# ------------------------------------------------------
+# Environment configs
+# ------------------------------------------------------
 MILVUS_HOST = os.environ.get('MILVUS_HOST', 'milvus')
 MILVUS_PORT = os.environ.get('MILVUS_PORT', '19530')
 VLLM_HOST = os.environ.get('VLLM_HOST', '172.17.0.1:8000')
 
+# ------------------------------------------------------
+# Flask app setup
+# ------------------------------------------------------
 app = Flask(__name__)
-# Enable CORS with full access for development
-CORS(app, expose_headers=["Content-Disposition"])
+CORS(app, supports_credentials=True,expose_headers=["Content-Disposition"])  # Enable CORS
 app.config.from_object(Config)
 register_routes(app)
-mongo=Connection('otg_db')
+mongo = Connection('otg_db')
 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -45,6 +49,9 @@ def check_if_token_is_revoked(jwt_header, jwt_payload):
     jti = jwt_payload["jti"]
     return jti in blacklist
 
+# ------------------------------------------------------
+# Default data initialization
+# ------------------------------------------------------
 def create_default_user():
     default_username = "admin"
     default_email = "admin@admin.com"
@@ -54,25 +61,28 @@ def create_default_user():
     
     if not user:
         encrypted_password = generate_password_hash(default_password)
-
         mongo.accounts.insert_one({
             "username": default_username,
             "email": default_email,
             "role": "administrator",
             "password": encrypted_password,
         })
-        logger.info("Default user created.")
+        logger.info("✅ Default user created.")
+        print("✅ Default user created.")
     else:
-        logger.info("Default user already exists.")
+        logger.info("ℹ️ Default user already exists.")
+        print("ℹ️ Default user already exists.")
 
     if mongo.systemPrompt.count_documents({}) == 0:
         mongo.systemPrompt.insert_one({
             "content":"",
             "temperature":"",
         })
-        logger.info("Default system Prompt created.")
+        logger.info("✅ Default system Prompt created.")
+        print("✅ Default system Prompt created.")
     else:
-        logger.info("Default system Prompt already exists.")
+        logger.info("ℹ️ Default system Prompt already exists.")
+        print("ℹ️ Default system Prompt already exists.")
 
     if mongo.setting.count_documents({}) == 0:
         mongo.setting.insert_one({
@@ -88,26 +98,27 @@ def create_default_user():
             "facebook_verify_password": "",
             "greeting_prompt": "",
         })
-        logger.info("Default system setting created.")
+        logger.info("✅ Default system setting created.")
+        print("✅ Default system setting created.")
     else:
-        logger.info("Default system setting already exists.")
+        logger.info("ℹ️ Default system setting already exists.")
+        print("ℹ️ Default system setting already exists.")
 
+    print("✅ Mock data initialization completed")
+    logger.info("✅ Mock data initialization completed")
+
+# ------------------------------------------------------
+# Routes
+# ------------------------------------------------------
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-
-
-
 ALLOWED_EXTENSIONS = {'txt', 'docx'}
-
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -129,21 +140,23 @@ def upload_file():
                 try:
                     content = file.read().decode('utf-8')
                 except UnicodeDecodeError:
-                    # Fallback for different encodings if UTF-8 fails
-                    content = file.read().decode('latin-1') # Or 'tis-620' for specific Thai context if UTF-8 isn't used
+                    content = file.read().decode('latin-1')
             elif ext == "docx":
                 with BytesIO(file.read()) as docx_io:
                     result = mammoth.extract_raw_text(docx_io)
-                    content = result.value  # The extracted text
+                    content = result.value
             else:
                 return jsonify({'error': 'Unsupported file type'}), 400
 
-            # Save file if needed
-            file.seek(0) # Reset file pointer after reading content
+            file.seek(0) 
             file.save(filepath)
 
-            # Return original filename for display if desired, even if saved with unique name
-            return jsonify({'message': 'File uploaded', 'filename': original_filename, 'saved_as': unique_filename, 'content': content}), 201
+            return jsonify({
+                'message': 'File uploaded',
+                'filename': original_filename,
+                'saved_as': unique_filename,
+                'content': content
+            }), 201
         else:
             return jsonify({'error': 'Invalid file type'}), 400
 
@@ -157,14 +170,15 @@ def upload_file():
                 resp = requests.get(export_url)
                 if resp.status_code == 200:
                     content = resp.text
-                    # Google Docs doesn't provide a filename, so we generate one.
-                    # This will not be a problem with Thai characters as it's generated.
                     filename = f"gdoc_{doc_id}.txt"
-                    # Optionally, save file if needed
                     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write(content)
-                    return jsonify({'message': 'Google Doc downloaded', 'filename': filename, 'content': content}), 201
+                    return jsonify({
+                        'message': 'Google Doc downloaded',
+                        'filename': filename,
+                        'content': content
+                    }), 201
                 else:
                     return jsonify({'error': 'Failed to fetch Google Doc'}), 400
             else:
@@ -172,25 +186,19 @@ def upload_file():
 
     return jsonify({'error': 'No file or Google Doc URL provided'}), 400
 
-
-
 @app.route('/model_list', methods=['GET'])
 def model_list():
     return jsonify({
         "domain_name": [
             {"label": "openrounter", "value": "https://openrouter.ai/api/v1"},
             {"label": "opentogether", "value": "https://api.together.xyz/v1"},
-            # {"label": "ollama", "value": True}
         ]
     })
 
-
-
+# ------------------------------------------------------
+# App entry
+# ------------------------------------------------------
 create_default_user()
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=True)
-
-
-
-
-    

@@ -2,19 +2,28 @@ from .rag_database.index import RAGSQLQuery
 from pathlib import Path
 import tqdm
 import os
+from configs import get_config
 from dotenv import load_dotenv
+
 load_dotenv()
+
+api_key = get_config().get("apikey", "")
 
 SQL_FOLDER_DIR = Path(__file__).resolve().parent.parent / 'sql-files'
 
-RAGSQL = RAGSQLQuery(
-    user= os.getenv('DB_USER', "root"), 
-    password= os.getenv('DB_PASSWORD', "password"), 
-    host=os.getenv('DB_HOST', "rdbms"), 
-    port=os.getenv('DB_PORT', 3306), 
-    database=os.getenv('DB_DATABASE', "customer_service_db"),
-    together_api_key=os.getenv("TOGETHER_API_KEY")
-)
+RAGSQL = None
+if api_key:
+    RAGSQL = RAGSQLQuery(
+        user=os.getenv('DB_USER', "root"),
+        password=os.getenv('DB_PASSWORD', "password"),
+        host=os.getenv('DB_HOST', "rdbms"),
+        port=os.getenv('DB_PORT', 3306),
+        database=os.getenv('DB_DATABASE', "customer_service_db"),
+        together_api_key=api_key
+    )
+else:
+    print("⚠️ No API key set. Skipping RAGSQL initialization.")
+
 
 question = "ยาที่ใช้แก้ปวด"
 
