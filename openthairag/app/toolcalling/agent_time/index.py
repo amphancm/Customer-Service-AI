@@ -3,8 +3,36 @@ from crewai import LLM, Task, Agent, Crew
 from crewai.tools import BaseTool
 from datetime import datetime
 import pytz
+from db import Connection
 from dotenv import load_dotenv
 load_dotenv()
+
+mongo=Connection('otg_db')
+
+
+def get_model_env():
+    """
+    Fetch 'server' and 'local' configs from the settings collection.
+    Returns the enabled config's apikey, domainname, and modelname.
+    """
+    setting = mongo.setting.find_one({}, {"_id": 0, "server": 1, "local": 1})
+    if setting:
+        if setting.get("server", {}).get("enabled", False):
+            config = setting["server"]
+        elif setting.get("local", {}).get("enabled", False):
+            config = setting["local"]
+        else:
+            config = {}
+        return {
+            "isServer": config.get("enabled", False),
+            "isLocal": not config.get("enabled", False),
+            "apikey": config.get("apikey", ""),
+            "domainname": config.get("domainname", ""),
+            "modelname": config.get("modelname", "")
+        }
+    return {"apikey": "", "domainname": "", "modelname": ""}
+
+api_key = get_model_env().get("apikey", "")
 
 class TimeTool(BaseTool):
   name: str = "time_tool"
@@ -20,7 +48,7 @@ class TimeTool(BaseTool):
 # Qwen/Qwen2.5-72B-Instruct-Turbo - เร็ว
 
 llm = LLM(model="together_ai/Qwen/Qwen2.5-72B-Instruct-Turbo",
-          api_key="tgp_v1_X6sy0ZuipjZK1zAmpXpIM6XwPlE7pks6xiZBftKPu9Y",
+          api_key=api_key,
           base_url="https://api.together.xyz/v1"
         )
 

@@ -1,32 +1,30 @@
 version: '3.9'
 
 services:
- 
-  # ollama:
-  #   container_name: ollamaserver
-  #   image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
-  #   pull_policy: always
-  #   tty: true
-  #   restart: unless-stopped
-  #   ports:
-  #     - "11434:11434"  # <-- Add this line to expose the port
-  #   volumes:
-  #     - ollama:/root/.ollama
-  #   entrypoint: ["/bin/sh", "-c"]
-  #   command:
-  #     - |
-  #       apt-get update && apt-get install -y curl && \
-  #       ollama serve & \
-  #       until curl -s http://localhost:11434 > /dev/null; do \
-  #         echo "Waiting for Ollama server..."; sleep 1; \
-  #       done && \
-  #       echo "Ollama server is up. Pulling models..." && \
-  #       ollama pull tinyllama && \
-  #       ollama pull gemma2:2b && \
-  #       echo "Models pulled successfully. Tailing logs..." && \
-  #       tail -f /dev/null
+  ollama:
+    container_name: ollamaserver
+    image: ollama/ollama:latest
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "11434:11434"  
+    volumes:
+      - ollama:/root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apt-get update && apt-get install -y curl && \
+        ollama serve & \
+        until curl -s http://localhost:11434 > /dev/null; do \
+          echo "Waiting for Ollama server..."; sleep 1; \
+        done && \
+        echo "Ollama server is up. Pulling models..." && \
+        ollama pull tinyllama && \
+        ollama pull gemma2:2b && \
+        echo "Models pulled successfully. Tailing logs..." && \
+        tail -f /dev/null
     
-  
   
   flask:
     container_name: backend
@@ -40,7 +38,6 @@ services:
     environment:
       - MILVUS_HOST=milvus
       - MILVUS_PORT=19530
-      - TOGETHER_API_KEY=${TOGETHER_API_KEY}
     depends_on:
       milvus:
         condition: service_started
@@ -62,7 +59,7 @@ services:
       sh -c "npm install && npm run dev"
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - VITE_API_BASE_URL=http://${SERVER_IP}:5500
+      - VITE_API_BASE_URL=http://localhost:5500
       - VITE_OLLAMA_HOST=http://ollama:11434/v1
     depends_on:
       milvus:
@@ -133,8 +130,8 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: customer_service_db
     ports:
       - "3306:3306"
     volumes:
@@ -147,4 +144,4 @@ volumes:
   etcd_data:
   minio_data:
   ollama: {}
-  
+

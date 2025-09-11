@@ -304,7 +304,7 @@ def compute_model(query, arr_history, system_prompt, temperature):
     if setting_info.get("isServer"):
         try:
             logger.info("Sending request to Together API")
-            client = Together(api_key=os.getenv("TOGETHER_API_KEY"))
+            client = Together(api_key=setting_info.get("apikey", ""))
             response = client.chat.completions.create(
                 model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
                 messages=prompt,
@@ -319,7 +319,7 @@ def compute_model(query, arr_history, system_prompt, temperature):
     elif setting_info.get("isLocal"):
         try:
             logger.info("Sending request Local LLM")
-            client = Together(api_key=os.getenv("TOGETHER_API_KEY"))
+            client = Together(api_key=setting_info.get("apikey", ""))
             response = client.chat.completions.create(
                 model=setting_info.get("modelname", "Qwen/Qwen2.5-72B-Instruct-Turbo"),
                 messages=prompt,
