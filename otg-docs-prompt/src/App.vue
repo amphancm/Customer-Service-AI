@@ -90,9 +90,7 @@ async function logout() {
             <RouterLink to="/" class="text-customSildboxred font-bold mr-2"> Natachat</RouterLink>
            <span class="text-black font-bold ">AI</span>
           </h3>
-          <!-- <div class="bg-gray-700 w-4/5 h-0.5 rounded-lg mx-auto mb-6"></div> -->
 
-          <!-- Menu Items -->
           <div class="space-y-4 text-left px-10">
             <!-- Documents -->
             <RouterLink to="/docs" v-slot="{ isActive }">
@@ -152,39 +150,14 @@ async function logout() {
                   <img src="@/assets/icons/comment.png" class="mr-3" width="20" height="20" alt="Chat" />
                   Chat
                 </div>
-                <!-- <Icon icon="mdi:chevron-down" class="transition-transform duration-300"
-                  :class="{ 'rotate-180': submenuOpen['chat'] }" /> -->
               </button>
             </h4>
             </RouterLink>
 
 
-            <!-- Chat Submenu -->
             <transition>
               <div v-show="submenuOpen['chat']" class="ml-6 space-y-4 ss">
                 <RouterLink to="/" v-slot="{ isActive }">
-                  <!-- <h5
-                    class="flex items-center text-base px-4 py-2 rounded font-semibold transition duration-200 hover:bg-customSildboxred hover:text-black mb-2"
-                    :class="{ 'bg-customSildboxred text-black ': isActive }">
-                    <Icon icon="/Users/jirapatsomseang/Desktop/llm_agent/otg-docs-prompt/src/assets/icons/Frame_14.png" class="mr-3" width="20" height="20" />
-                    Chat
-                  </h5> -->
-                <!-- </RouterLink>
-                <RouterLink to="/chat/line" v-slot="{ isActive }"> -->
-                  <!-- <h5
-                    class="flex items-center text-base px-4 py-2 rounded font-semibold transition duration-200 hover:bg-customSildboxred hover:text-black mb-2"
-                    :class="{ 'bg-customSildboxred text-black ': isActive }">
-                    <Icon icon="mdi:message-outline" class="mr-3" width="20" height="20" />
-                    Line Chat
-                  </h5> -->
-                <!-- </RouterLink>
-                <RouterLink to="/Debug" v-slot="{ isActive }"> -->
-                  <!-- <h5
-                    class="flex items-center text-base px-4 py-2 rounded font-semibold transition duration-200 hover:bg-customSildboxred hover:text-black"
-                    :class="{ 'bg-customSildboxred text-black ': isActive }">
-                    <Icon icon="mdi:bug-outline" class="mr-3" width="20" height="20" />
-                    DEBUG
-                  </h5> -->
                 </RouterLink>
               </div>
             </transition>
@@ -207,14 +180,12 @@ async function logout() {
                 <RouterLink to="/setting" v-slot="{ isActive }">
                   <h5 class="flex items-center mb-2 text-base px-4 py-2 rounded-xl font-semibold transition duration-200 hover:bg-customSildboxred hover:text-black"
                     :class="{ 'bg-customSildboxred text-black': isActive }">
-                     <!-- <img src="@/assets/icons/file-invoice (1).png" class="mr-3" width="20" height="20" alt="Settings" /> -->
                     General
                   </h5>
                 </RouterLink>
                 <RouterLink to="/settings/account" v-slot="{ isActive }">
                   <h5 class="flex items-center text-base px-4 py-2 rounded-xl font-semibold transition duration-200 hover:bg-customSildboxred hover:text-black"
                     :class="{ 'bg-customSildboxred text-black': isActive }">
-                     <!-- <img src="@/assets/icons/portrait.png" class="mr-3" width="20" height="20" alt="Settings" /> -->
                     account
                   </h5>
                 </RouterLink>
@@ -223,7 +194,6 @@ async function logout() {
           </div>
         </div>
 
-        <!-- Bottom Menu -->
         <div class="absolute bottom-0 w-full px-4 py-2 ">
           <div v-if="profile != null" class="flex">
             <div class="flex-auto items-center flex justify-center">
@@ -249,13 +219,6 @@ async function logout() {
         </div>
       </div>
 
-      <!-- Toggle Sidebar Button -->
-      <!-- <button @click="toggleSidebar"
-        class="absolute top-3 left-4 bg-gray-800 text-white p-2  rounded hover:bg-gray-600 z-10 ">
-        <Icon :icon="isSidebarOpen ? 'mdi:menu-open' : 'mdi:menu'" class="text-white" width="24" height="24" />
-      </button> -->
-
-      <!-- Main Content -->
       <div class="flex-auto bg-custombodyLight ">
         <RouterView />
       </div>

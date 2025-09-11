@@ -4,14 +4,11 @@
       <div class="h-screen flex flex-col p-4 ">
         <div class="flex-none w-full text-center ">
 
-          <!-- <h5>Chat room</h5> -->
         </div>
         <div class="flex-grow py-4 overflow-y-auto mb-2">
           <div v-for="(chatRoom, index) in Object.values(chatRooms).reverse()" :key="index"
             class="w-full h-14 rounded-xl mb-2 flex items-center px-4 cursor-pointer justify-between relative hover:bg-gray-400">
-            <!-- คลิกเลือกห้อง -->
             <div class="flex items-center w-full">
-              <!-- ซ้าย: ข้อความ + click เข้า chat room -->
               <div @click="selectRoom(Object.values(chatRooms).length - 1 - index)"
                 class="flex items-center space-x-2 w-4/5 cursor-pointer">
                 <div class="pl-[10px]">
@@ -22,7 +19,6 @@
                 </div>
               </div>
 
-              <!-- ขวา: ปุ่มเมนู (3 จุด) -->
               <div class="w-1/5 flex justify-end">
                 <button @click.stop="toggleSubmenu(index)">
                   <svg class="w-6 h-6 text-gray-600 hover:text-black" fill="currentColor" viewBox="0 0 20 20">
@@ -51,40 +47,6 @@
                 </ul>
               </div>
             </div>
-
-
-
-            <!-- <div v-if="submenuIndex === index"
-            class="absolute right-0 mt-2 w-28 bg-white border border-gray-300 rounded shadow-lg z-50"
-          >
-            <ul class="text-textColor">
-              <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer" @click="openModalSystemPrompt">
-                <h6>Prompt</h6>
-              </li>
-              <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer" @click="openModalDelete">
-                <h6>Delete</h6>
-              </li>
-            </ul>
-          </div> -->
-
-            <!-- ปุ่มเปิดเมนู -->
-            <!-- <button @click.stop="toggleSubmenu(index)">
-
-          </button> -->
-
-            <!-- เมนู -->
-            <!-- <div v-if="submenuIndex === index"
-              class="absolute top-full mt-1 bg-customeChat border rounded-lg shadow-lg w-24 right-0 z-10"
-          >
-            <ul class="text-textColor">
-              <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer" @click="openModalSystemPrompt">
-                <h6>Prompt</h6>
-              </li>
-              <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer" @click="openModalDelete">
-                <h6>Delete</h6>
-              </li>
-            </ul>
-          </div> -->
           </div>
 
         </div>
@@ -99,28 +61,13 @@
     <div class="flex-auto w-full">
       <div class="h-screen flex flex-col p-4 mt-4">
         <div class="h-12 flex items-center justify-between">
-          <!-- <h3 class="text-black">Prompt labs</h3> -->
           <div class="relative">
             <button class="text-black font-bold px-4 py-2 rounded hover:bg-gray-200 transition" @click="toggleSubmenu"
               ref="targetRef">
               PROMPT
-              <!-- <Icon :icon="isSubmenuVisible ? 'mdi:chevron-up' : 'mdi:chevron-down'" width="20" height="20"
-                class="ml-1 inline" /> -->
             </button>
-            <!-- <div v-if="isSubmenuVisible"
-              class="absolute mt-1 bg-customeChat border rounded-lg shadow-lg w-24 right-0 z-10">
-              <ul class="text-textColor">
-                <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer"  @click="openModalSystemPrompt">
-                  <h6>Prompt</h6>
-                </li>
-                <li class="px-6 py-1 hover:text-red_jetts rounded cursor-pointer" @click="openModalDelete">
-                  <h6>Delete</h6>
-                </li>
-              </ul>
-            </div> -->
           </div>
 
-          <!-- <Icon icon="mdi:flask" class="text-black" width="32" height="32" /> -->
         </div>
         <div class="flex flex-grow parent overflow-y-auto w-full rounded-md">
           <div class=" w-full h-full flex flex-col" ref="messagesContainer">
@@ -141,11 +88,10 @@
                 <div :class="[
                   'max-w-[75%] px-5 py-3 rounded-2xl shadow',
                   message.role === 'user'
-                    ? 'bg-[#F9EAEA] text-white rounded-br-none'
+                    ? 'bg-[#F9EAEA] text-black rounded-br-none'
                     : 'bg-white text-black rounded-bl-none border'
                 ]" style="margin-bottom: 2px;">
                   <template v-if="message.type === 'text'">
-                    <!-- Check if content is a direct image URL -->
                     <template v-if="/^https?:\/\/.*\.(png|jpg|jpeg|gif|webp|svg)$/i.test(message.content)">
                       <a :href="message.content" target="_blank" rel="noopener">
                         <img :src="message.content" alt="image" class="w-40 h-40 object-cover rounded-md mb-2" />
@@ -193,10 +139,7 @@
                 </div>
               </div>
             </div>
-            <!-- Show this if there are no messages in the selected chat room -->
             <div v-else class="flex-1 flex flex-col items-center justify-center text-gray-400 px-4">
-              <!-- <Icon icon="mdi:chat-outline" width="48" height="48" class="mb-4" /> -->
-              <!-- <p class="text-2xl font-bold text-black mb-2">Welcome to Jetts! 💪</p> -->
               <p class=" text-xl font-bold text-black mb-2">What can i help with?</p>
               <div class="w-full flex justify-center mt-6">
                 <div class="relative w-full max-w-4xl">
@@ -379,7 +322,6 @@ function updateSliderFill(target: HTMLInputElement) {
   const max = parseFloat(target.max);
 
   const percentage = ((value - min) / (max - min)) * 100;
-  console.log(`Slider updated to ${percentage}%`); // ✅ debug
   target.style.setProperty('--slider-percentage', percentage + '%');
 }
 
@@ -438,6 +380,9 @@ onMounted(async () => {
     alert('Unable to load settings. Please configure your settings.')
     await router.push('/setting')
   }
+  document.addEventListener('click', handleClickOutside)
+  const slider = document.querySelector<HTMLInputElement>('input.custom-slider');
+  if (slider) updateSliderFill(slider);
 })
 
 function openModal() {
@@ -467,17 +412,6 @@ async function handleSubmitMessage() {
   if (chatRoomsList.length == 0) {
     alert('Please create a chat room before sending a message.')
     return
-    // openCreateModalSystemPrompt()
-    // type.value = 'create'
-    // await chatRoomsStore.createChatRooms({
-    //   account_owner: profile.username,
-    //   chatOption: {
-    //     name: name.value,
-    //     temperature: system_prompt.value.temperature,
-    //     systemPrompt: system_prompt.value.content,
-    //   },
-    //   messages: [],
-    // })
   }
   const messageContent = inputMessage.value
   inputMessage.value = ''
@@ -602,10 +536,6 @@ async function handleConfirmDelete() {
   closeModalDelete()
 }
 
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
-
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
@@ -615,8 +545,6 @@ function extractImageUrlFromMarkdown(text: string): string | null {
   const match = text.match(/\[.*?\]\((https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))\)/i)
   return match ? match[1] : null
 }
-
-import { ref } from 'vue'
 
 const isSidebarOpen = ref(true)
 

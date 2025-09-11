@@ -70,7 +70,7 @@ const router = createRouter({
     {
       path: '/docs/:id',
       name: 'editing-docs',
-      component: EditDocumentModal,
+      component: EditDocsView,
     },
     {
       path: '/docs/create',
@@ -86,11 +86,6 @@ const router = createRouter({
       path: '/acc/create',
       name: 'create-acc',
       component: CreateAccountView,
-    },
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
     },
     {
       path: '/chat',
